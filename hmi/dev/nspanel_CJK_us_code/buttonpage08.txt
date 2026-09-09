@@ -165,7 +165,7 @@ Text button01pic
         x coordinate            : 38
         y coordinate            : 51
         Width                   : 100
-        Height                  : 100
+        Height                  : 78
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -192,7 +192,7 @@ Text button02pic
         x coordinate            : 181
         y coordinate            : 51
         Width                   : 100
-        Height                  : 100
+        Height                  : 78
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -217,9 +217,9 @@ Text button03pic
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 38
-        y coordinate            : 153
+        y coordinate            : 133
         Width                   : 100
-        Height                  : 100
+        Height                  : 78
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -244,9 +244,9 @@ Text button04pic
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 181
-        y coordinate            : 153
+        y coordinate            : 133
         Width                   : 100
-        Height                  : 100
+        Height                  : 78
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -271,9 +271,9 @@ Text button05pic
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 38
-        y coordinate            : 256
+        y coordinate            : 215
         Width                   : 100
-        Height                  : 100
+        Height                  : 78
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -298,9 +298,9 @@ Text button06pic
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 181
-        y coordinate            : 256
+        y coordinate            : 215
         Width                   : 100
-        Height                  : 100
+        Height                  : 78
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -325,9 +325,9 @@ Text button07pic
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 38
-        y coordinate            : 357
+        y coordinate            : 297
         Width                   : 100
-        Height                  : 100
+        Height                  : 78
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -352,9 +352,63 @@ Text button08pic
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 181
-        y coordinate            : 357
+        y coordinate            : 297
         Width                   : 100
-        Height                  : 100
+        Height                  : 78
+        Effect                  : load
+        Effect Priority         : 0
+        Effect Time             : 300
+        Fill                    : crop image
+        Associated Keyboard     : none
+        Font ID                 : 0
+        Cropped Back. Picture ID: 0
+        Horizontal Alignment    : center
+        Vertical Alignment      : center
+        Input Type              : character
+        Text                    :
+        Max. Text Size          : 0
+        Word wrap               : disabled
+        Horizontal Spacing      : 0
+        Vertical Spacing        : 0
+
+Text button09pic
+    Attributes
+        ID                      : 19
+        Scope                   : local
+        Dragging                : 0
+        Send Component ID       : disabled
+        Opacity                 : 127
+        x coordinate            : 38
+        y coordinate            : 379
+        Width                   : 100
+        Height                  : 78
+        Effect                  : load
+        Effect Priority         : 0
+        Effect Time             : 300
+        Fill                    : crop image
+        Associated Keyboard     : none
+        Font ID                 : 0
+        Cropped Back. Picture ID: 0
+        Horizontal Alignment    : center
+        Vertical Alignment      : center
+        Input Type              : character
+        Text                    :
+        Max. Text Size          : 0
+        Word wrap               : disabled
+        Horizontal Spacing      : 0
+        Vertical Spacing        : 0
+
+Text button10pic
+    Attributes
+        ID                      : 20
+        Scope                   : local
+        Dragging                : 0
+        Send Component ID       : disabled
+        Opacity                 : 127
+        x coordinate            : 181
+        y coordinate            : 379
+        Width                   : 100
+        Height                  : 78
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -373,15 +427,15 @@ Text button08pic
 
 Text button01text
     Attributes
-        ID                      : 19
+        ID                      : 21
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 47
-        y coordinate            : 103
+        y coordinate            : 98
         Width                   : 82
-        Height                  : 40
+        Height                  : 22
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -400,15 +454,15 @@ Text button01text
 
 Text button02text
     Attributes
-        ID                      : 20
+        ID                      : 22
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 190
-        y coordinate            : 103
+        y coordinate            : 98
         Width                   : 82
-        Height                  : 40
+        Height                  : 22
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -427,15 +481,15 @@ Text button02text
 
 Text button03text
     Attributes
-        ID                      : 21
+        ID                      : 23
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 47
-        y coordinate            : 204
+        y coordinate            : 180
         Width                   : 82
-        Height                  : 40
+        Height                  : 22
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -454,15 +508,15 @@ Text button03text
 
 Text button04text
     Attributes
-        ID                      : 22
+        ID                      : 24
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 190
-        y coordinate            : 204
+        y coordinate            : 180
         Width                   : 82
-        Height                  : 40
+        Height                  : 22
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -481,15 +535,15 @@ Text button04text
 
 Text button05text
     Attributes
-        ID                      : 23
+        ID                      : 25
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 47
-        y coordinate            : 306
+        y coordinate            : 262
         Width                   : 82
-        Height                  : 40
+        Height                  : 22
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -508,15 +562,15 @@ Text button05text
 
 Text button06text
     Attributes
-        ID                      : 24
+        ID                      : 26
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 190
-        y coordinate            : 306
+        y coordinate            : 262
         Width                   : 82
-        Height                  : 40
+        Height                  : 22
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -535,15 +589,15 @@ Text button06text
 
 Text button07text
     Attributes
-        ID                      : 25
+        ID                      : 27
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 47
-        y coordinate            : 407
+        y coordinate            : 344
         Width                   : 82
-        Height                  : 40
+        Height                  : 22
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -562,15 +616,69 @@ Text button07text
 
 Text button08text
     Attributes
-        ID                      : 26
+        ID                      : 28
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 190
-        y coordinate            : 407
+        y coordinate            : 344
         Width                   : 82
-        Height                  : 40
+        Height                  : 22
+        Effect                  : load
+        Effect Priority         : 0
+        Effect Time             : 300
+        Fill                    : crop image
+        Associated Keyboard     : none
+        Font ID                 : 0
+        Cropped Back. Picture ID: 0
+        Horizontal Alignment    : center
+        Vertical Alignment      : bottom
+        Input Type              : character
+        Text                    :
+        Max. Text Size          : 22
+        Word wrap               : disabled
+        Horizontal Spacing      : 0
+        Vertical Spacing        : 0
+
+Text button09text
+    Attributes
+        ID                      : 29
+        Scope                   : local
+        Dragging                : 0
+        Send Component ID       : disabled
+        Opacity                 : 127
+        x coordinate            : 47
+        y coordinate            : 426
+        Width                   : 82
+        Height                  : 22
+        Effect                  : load
+        Effect Priority         : 0
+        Effect Time             : 300
+        Fill                    : crop image
+        Associated Keyboard     : none
+        Font ID                 : 0
+        Cropped Back. Picture ID: 0
+        Horizontal Alignment    : center
+        Vertical Alignment      : bottom
+        Input Type              : character
+        Text                    :
+        Max. Text Size          : 22
+        Word wrap               : disabled
+        Horizontal Spacing      : 0
+        Vertical Spacing        : 0
+
+Text button10text
+    Attributes
+        ID                      : 30
+        Scope                   : local
+        Dragging                : 0
+        Send Component ID       : disabled
+        Opacity                 : 127
+        x coordinate            : 190
+        y coordinate            : 426
+        Width                   : 82
+        Height                  : 22
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -589,7 +697,7 @@ Text button08text
 
 Text button01icon
     Attributes
-        ID                      : 27
+        ID                      : 31
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
@@ -597,7 +705,7 @@ Text button01icon
         x coordinate            : 38
         y coordinate            : 55
         Width                   : 48
-        Height                  : 48
+        Height                  : 40
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -616,7 +724,7 @@ Text button01icon
 
 Text button02icon
     Attributes
-        ID                      : 28
+        ID                      : 32
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
@@ -624,7 +732,7 @@ Text button02icon
         x coordinate            : 181
         y coordinate            : 55
         Width                   : 48
-        Height                  : 48
+        Height                  : 40
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -643,15 +751,15 @@ Text button02icon
 
 Text button03icon
     Attributes
-        ID                      : 29
+        ID                      : 33
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 38
-        y coordinate            : 157
+        y coordinate            : 137
         Width                   : 48
-        Height                  : 48
+        Height                  : 40
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -670,15 +778,15 @@ Text button03icon
 
 Text button04icon
     Attributes
-        ID                      : 30
+        ID                      : 34
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 181
-        y coordinate            : 157
+        y coordinate            : 137
         Width                   : 48
-        Height                  : 48
+        Height                  : 40
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -697,15 +805,15 @@ Text button04icon
 
 Text button05icon
     Attributes
-        ID                      : 31
+        ID                      : 35
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 38
-        y coordinate            : 260
+        y coordinate            : 219
         Width                   : 48
-        Height                  : 48
+        Height                  : 40
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -724,15 +832,15 @@ Text button05icon
 
 Text button06icon
     Attributes
-        ID                      : 32
+        ID                      : 36
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 181
-        y coordinate            : 260
+        y coordinate            : 219
         Width                   : 48
-        Height                  : 48
+        Height                  : 40
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -751,15 +859,15 @@ Text button06icon
 
 Text button07icon
     Attributes
-        ID                      : 33
+        ID                      : 37
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 38
-        y coordinate            : 361
+        y coordinate            : 301
         Width                   : 48
-        Height                  : 48
+        Height                  : 40
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -778,15 +886,69 @@ Text button07icon
 
 Text button08icon
     Attributes
-        ID                      : 34
+        ID                      : 38
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 181
-        y coordinate            : 361
+        y coordinate            : 301
         Width                   : 48
-        Height                  : 48
+        Height                  : 40
+        Effect                  : load
+        Effect Priority         : 0
+        Effect Time             : 300
+        Fill                    : crop image
+        Associated Keyboard     : none
+        Font ID                 : 0
+        Cropped Back. Picture ID: 0
+        Horizontal Alignment    : center
+        Vertical Alignment      : center
+        Input Type              : character
+        Text                    :
+        Max. Text Size          : 10
+        Word wrap               : disabled
+        Horizontal Spacing      : 0
+        Vertical Spacing        : 0
+
+Text button09icon
+    Attributes
+        ID                      : 39
+        Scope                   : local
+        Dragging                : 0
+        Send Component ID       : disabled
+        Opacity                 : 127
+        x coordinate            : 38
+        y coordinate            : 383
+        Width                   : 48
+        Height                  : 40
+        Effect                  : load
+        Effect Priority         : 0
+        Effect Time             : 300
+        Fill                    : crop image
+        Associated Keyboard     : none
+        Font ID                 : 0
+        Cropped Back. Picture ID: 0
+        Horizontal Alignment    : center
+        Vertical Alignment      : center
+        Input Type              : character
+        Text                    :
+        Max. Text Size          : 10
+        Word wrap               : disabled
+        Horizontal Spacing      : 0
+        Vertical Spacing        : 0
+
+Text button10icon
+    Attributes
+        ID                      : 40
+        Scope                   : local
+        Dragging                : 0
+        Send Component ID       : disabled
+        Opacity                 : 127
+        x coordinate            : 181
+        y coordinate            : 383
+        Width                   : 48
+        Height                  : 40
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -805,7 +967,7 @@ Text button08icon
 
 Text button01bri
     Attributes
-        ID                      : 35
+        ID                      : 41
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
@@ -813,7 +975,7 @@ Text button01bri
         x coordinate            : 84
         y coordinate            : 61
         Width                   : 48
-        Height                  : 30
+        Height                  : 24
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -832,7 +994,7 @@ Text button01bri
 
 Text button02bri
     Attributes
-        ID                      : 36
+        ID                      : 42
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
@@ -840,7 +1002,7 @@ Text button02bri
         x coordinate            : 226
         y coordinate            : 61
         Width                   : 48
-        Height                  : 30
+        Height                  : 24
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -859,15 +1021,15 @@ Text button02bri
 
 Text button03bri
     Attributes
-        ID                      : 37
+        ID                      : 43
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 83
-        y coordinate            : 163
+        x coordinate            : 84
+        y coordinate            : 143
         Width                   : 48
-        Height                  : 30
+        Height                  : 24
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -886,15 +1048,15 @@ Text button03bri
 
 Text button04bri
     Attributes
-        ID                      : 38
+        ID                      : 44
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 226
-        y coordinate            : 163
+        y coordinate            : 143
         Width                   : 48
-        Height                  : 30
+        Height                  : 24
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -913,15 +1075,15 @@ Text button04bri
 
 Text button05bri
     Attributes
-        ID                      : 39
+        ID                      : 45
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 83
-        y coordinate            : 266
+        x coordinate            : 84
+        y coordinate            : 225
         Width                   : 48
-        Height                  : 30
+        Height                  : 24
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -940,15 +1102,15 @@ Text button05bri
 
 Text button06bri
     Attributes
-        ID                      : 40
+        ID                      : 46
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 225
-        y coordinate            : 266
+        x coordinate            : 226
+        y coordinate            : 225
         Width                   : 48
-        Height                  : 30
+        Height                  : 24
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -967,15 +1129,15 @@ Text button06bri
 
 Text button07bri
     Attributes
-        ID                      : 41
+        ID                      : 47
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 83
-        y coordinate            : 367
+        x coordinate            : 84
+        y coordinate            : 307
         Width                   : 48
-        Height                  : 30
+        Height                  : 24
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -994,15 +1156,69 @@ Text button07bri
 
 Text button08bri
     Attributes
-        ID                      : 42
+        ID                      : 48
         Scope                   : local
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
         x coordinate            : 226
-        y coordinate            : 367
+        y coordinate            : 307
         Width                   : 48
-        Height                  : 30
+        Height                  : 24
+        Effect                  : load
+        Effect Priority         : 0
+        Effect Time             : 300
+        Fill                    : crop image
+        Associated Keyboard     : none
+        Font ID                 : 0
+        Cropped Back. Picture ID: 0
+        Horizontal Alignment    : center
+        Vertical Alignment      : center
+        Input Type              : character
+        Text                    :
+        Max. Text Size          : 4
+        Word wrap               : disabled
+        Horizontal Spacing      : 0
+        Vertical Spacing        : 0
+
+Text button09bri
+    Attributes
+        ID                      : 49
+        Scope                   : local
+        Dragging                : 0
+        Send Component ID       : disabled
+        Opacity                 : 127
+        x coordinate            : 84
+        y coordinate            : 389
+        Width                   : 48
+        Height                  : 24
+        Effect                  : load
+        Effect Priority         : 0
+        Effect Time             : 300
+        Fill                    : crop image
+        Associated Keyboard     : none
+        Font ID                 : 0
+        Cropped Back. Picture ID: 0
+        Horizontal Alignment    : center
+        Vertical Alignment      : center
+        Input Type              : character
+        Text                    :
+        Max. Text Size          : 4
+        Word wrap               : disabled
+        Horizontal Spacing      : 0
+        Vertical Spacing        : 0
+
+Text button10bri
+    Attributes
+        ID                      : 50
+        Scope                   : local
+        Dragging                : 0
+        Send Component ID       : disabled
+        Opacity                 : 127
+        x coordinate            : 226
+        y coordinate            : 389
+        Width                   : 48
+        Height                  : 24
         Effect                  : load
         Effect Priority         : 0
         Effect Time             : 300
@@ -1056,7 +1272,7 @@ Button button_back
 
 Hotspot button01
     Attributes
-        ID               : 43
+        ID               : 51
         Scope            : local
         Dragging         : 0
         Send Component ID: on press and release
@@ -1064,7 +1280,7 @@ Hotspot button01
         x coordinate     : 38
         y coordinate     : 51
         Width            : 100
-        Height           : 100
+        Height           : 78
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
@@ -1100,7 +1316,7 @@ Hotspot button01
 
 Hotspot button02
     Attributes
-        ID               : 44
+        ID               : 52
         Scope            : local
         Dragging         : 0
         Send Component ID: on press and release
@@ -1108,7 +1324,7 @@ Hotspot button02
         x coordinate     : 181
         y coordinate     : 51
         Width            : 100
-        Height           : 100
+        Height           : 78
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
@@ -1144,15 +1360,15 @@ Hotspot button02
 
 Hotspot button03
     Attributes
-        ID               : 45
+        ID               : 53
         Scope            : local
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
         x coordinate     : 38
-        y coordinate     : 153
+        y coordinate     : 133
         Width            : 100
-        Height           : 100
+        Height           : 78
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
@@ -1188,15 +1404,15 @@ Hotspot button03
 
 Hotspot button04
     Attributes
-        ID               : 46
+        ID               : 54
         Scope            : local
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
         x coordinate     : 181
-        y coordinate     : 153
+        y coordinate     : 133
         Width            : 100
-        Height           : 100
+        Height           : 78
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
@@ -1232,15 +1448,15 @@ Hotspot button04
 
 Hotspot button05
     Attributes
-        ID               : 47
+        ID               : 55
         Scope            : local
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
         x coordinate     : 38
-        y coordinate     : 256
+        y coordinate     : 215
         Width            : 100
-        Height           : 100
+        Height           : 78
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
@@ -1276,15 +1492,15 @@ Hotspot button05
 
 Hotspot button06
     Attributes
-        ID               : 48
+        ID               : 56
         Scope            : local
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
         x coordinate     : 181
-        y coordinate     : 256
+        y coordinate     : 215
         Width            : 100
-        Height           : 100
+        Height           : 78
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
@@ -1320,15 +1536,15 @@ Hotspot button06
 
 Hotspot button07
     Attributes
-        ID               : 49
+        ID               : 57
         Scope            : local
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
         x coordinate     : 38
-        y coordinate     : 357
+        y coordinate     : 297
         Width            : 100
-        Height           : 100
+        Height           : 78
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
@@ -1364,15 +1580,15 @@ Hotspot button07
 
 Hotspot button08
     Attributes
-        ID               : 50
+        ID               : 58
         Scope            : local
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
         x coordinate     : 181
-        y coordinate     : 357
+        y coordinate     : 297
         Width            : 100
-        Height           : 100
+        Height           : 78
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
@@ -1390,6 +1606,94 @@ Hotspot button08
                 if(sys0>0)
                 {
                     confirm.body.txt=button08text.txt
+                    confirm.page_id.val=dp
+                    confirm.page_name.txt=page_name.txt
+                    confirm.component.txt=click_comp.txt
+                    page confirm
+                }else
+                {
+                    lastclick.txt=page_name.txt+",short_click,"+click_comp.txt
+                    printh 92
+                    prints "localevent",0
+                    printh 00
+                    prints lastclick.txt,0
+                    printh 00
+                    printh FF FF FF
+                }
+            }
+
+Hotspot button09
+    Attributes
+        ID               : 59
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: on press and release
+        Opacity          : 127
+        x coordinate     : 38
+        y coordinate     : 379
+        Width            : 100
+        Height           : 78
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+
+    Events
+        Touch Press Event
+            click_comp.txt="button09"
+            click_timer.en=1
+
+        Touch Release Event
+            if(click_timer.en==1)
+            {
+                click_timer.en=0
+                sys0=confirm.val&256
+                if(sys0>0)
+                {
+                    confirm.body.txt=button09text.txt
+                    confirm.page_id.val=dp
+                    confirm.page_name.txt=page_name.txt
+                    confirm.component.txt=click_comp.txt
+                    page confirm
+                }else
+                {
+                    lastclick.txt=page_name.txt+",short_click,"+click_comp.txt
+                    printh 92
+                    prints "localevent",0
+                    printh 00
+                    prints lastclick.txt,0
+                    printh 00
+                    printh FF FF FF
+                }
+            }
+
+Hotspot button10
+    Attributes
+        ID               : 60
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: on press and release
+        Opacity          : 127
+        x coordinate     : 181
+        y coordinate     : 379
+        Width            : 100
+        Height           : 78
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+
+    Events
+        Touch Press Event
+            click_comp.txt="button10"
+            click_timer.en=1
+
+        Touch Release Event
+            if(click_timer.en==1)
+            {
+                click_timer.en=0
+                sys0=confirm.val&512
+                if(sys0>0)
+                {
+                    confirm.body.txt=button10text.txt
                     confirm.page_id.val=dp
                     confirm.page_name.txt=page_name.txt
                     confirm.component.txt=click_comp.txt
