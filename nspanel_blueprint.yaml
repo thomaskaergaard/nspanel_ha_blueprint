@@ -1551,6 +1551,70 @@ blueprint:
           description: *description_ask_for_confirmation
           selector:
             boolean:
+        entity65:
+          name: Button page 1, Button 9 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity65_name:
+          name: Button page 1, Button 9 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity65_icon:
+          name: Button page 1, Button 9 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity65_icon_color:
+          name: Button page 1, Button 9 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity65_confirm:
+          name: Button page 1, Button 9 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity66:
+          name: Button page 1, Button 10 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity66_name:
+          name: Button page 1, Button 10 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity66_icon:
+          name: Button page 1, Button 10 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity66_icon_color:
+          name: Button page 1, Button 10 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity66_confirm:
+          name: Button page 1, Button 10 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
     button_page_02:
       name: Button page 02 (optional)
       icon: mdi:gesture-tap-button
@@ -1815,6 +1879,70 @@ blueprint:
           selector: *color_selector
         entity16_confirm:
           name: Button page 2, Button 8 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity67:
+          name: Button page 2, Button 9 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity67_name:
+          name: Button page 2, Button 9 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity67_icon:
+          name: Button page 2, Button 9 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity67_icon_color:
+          name: Button page 2, Button 9 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity67_confirm:
+          name: Button page 2, Button 9 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity68:
+          name: Button page 2, Button 10 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity68_name:
+          name: Button page 2, Button 10 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity68_icon:
+          name: Button page 2, Button 10 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity68_icon_color:
+          name: Button page 2, Button 10 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity68_confirm:
+          name: Button page 2, Button 10 - Confirm execution of the button press
           default: false
           description: *description_ask_for_confirmation
           selector:
@@ -2087,6 +2215,70 @@ blueprint:
           description: *description_ask_for_confirmation
           selector:
             boolean:
+        entity69:
+          name: Button page 3, Button 9 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity69_name:
+          name: Button page 3, Button 9 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity69_icon:
+          name: Button page 3, Button 9 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity69_icon_color:
+          name: Button page 3, Button 9 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity69_confirm:
+          name: Button page 3, Button 9 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity70:
+          name: Button page 3, Button 10 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity70_name:
+          name: Button page 3, Button 10 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity70_icon:
+          name: Button page 3, Button 10 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity70_icon_color:
+          name: Button page 3, Button 10 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity70_confirm:
+          name: Button page 3, Button 10 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
     button_page_04:
       name: Button page 04 (optional)
       icon: mdi:gesture-tap-button
@@ -2351,6 +2543,70 @@ blueprint:
           selector: *color_selector
         entity32_confirm:
           name: Button page 4, Button 8 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity71:
+          name: Button page 4, Button 9 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity71_name:
+          name: Button page 4, Button 9 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity71_icon:
+          name: Button page 4, Button 9 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity71_icon_color:
+          name: Button page 4, Button 9 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity71_confirm:
+          name: Button page 4, Button 9 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity72:
+          name: Button page 4, Button 10 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity72_name:
+          name: Button page 4, Button 10 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity72_icon:
+          name: Button page 4, Button 10 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity72_icon_color:
+          name: Button page 4, Button 10 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity72_confirm:
+          name: Button page 4, Button 10 - Confirm execution of the button press
           default: false
           description: *description_ask_for_confirmation
           selector:
@@ -2623,6 +2879,70 @@ blueprint:
           description: *description_ask_for_confirmation
           selector:
             boolean:
+        entity73:
+          name: Button page 5, Button 9 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity73_name:
+          name: Button page 5, Button 9 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity73_icon:
+          name: Button page 5, Button 9 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity73_icon_color:
+          name: Button page 5, Button 9 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity73_confirm:
+          name: Button page 5, Button 9 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity74:
+          name: Button page 5, Button 10 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity74_name:
+          name: Button page 5, Button 10 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity74_icon:
+          name: Button page 5, Button 10 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity74_icon_color:
+          name: Button page 5, Button 10 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity74_confirm:
+          name: Button page 5, Button 10 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
     button_page_06:
       name: Button page 06 (optional)
       icon: mdi:gesture-tap-button
@@ -2887,6 +3207,70 @@ blueprint:
           selector: *color_selector
         entity48_confirm:
           name: Button page 6, Button 8 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity75:
+          name: Button page 6, Button 9 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity75_name:
+          name: Button page 6, Button 9 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity75_icon:
+          name: Button page 6, Button 9 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity75_icon_color:
+          name: Button page 6, Button 9 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity75_confirm:
+          name: Button page 6, Button 9 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity76:
+          name: Button page 6, Button 10 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity76_name:
+          name: Button page 6, Button 10 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity76_icon:
+          name: Button page 6, Button 10 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity76_icon_color:
+          name: Button page 6, Button 10 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity76_confirm:
+          name: Button page 6, Button 10 - Confirm execution of the button press
           default: false
           description: *description_ask_for_confirmation
           selector:
@@ -3159,6 +3543,70 @@ blueprint:
           description: *description_ask_for_confirmation
           selector:
             boolean:
+        entity77:
+          name: Button page 7, Button 9 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity77_name:
+          name: Button page 7, Button 9 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity77_icon:
+          name: Button page 7, Button 9 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity77_icon_color:
+          name: Button page 7, Button 9 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity77_confirm:
+          name: Button page 7, Button 9 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity78:
+          name: Button page 7, Button 10 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity78_name:
+          name: Button page 7, Button 10 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity78_icon:
+          name: Button page 7, Button 10 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity78_icon_color:
+          name: Button page 7, Button 10 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity78_confirm:
+          name: Button page 7, Button 10 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
     button_page_08:
       name: Button page 08 (optional)
       icon: mdi:gesture-tap-button
@@ -3423,6 +3871,70 @@ blueprint:
           selector: *color_selector
         entity64_confirm:
           name: Button page 8, Button 8 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity79:
+          name: Button page 8, Button 9 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity79_name:
+          name: Button page 8, Button 9 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity79_icon:
+          name: Button page 8, Button 9 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity79_icon_color:
+          name: Button page 8, Button 9 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity79_confirm:
+          name: Button page 8, Button 9 - Confirm execution of the button press
+          default: false
+          description: *description_ask_for_confirmation
+          selector:
+            boolean:
+        entity80:
+          name: Button page 8, Button 10 - Entity (Optional)
+          description: >-
+            `Optional`
+
+            Entity to be controlled.
+
+            *Only one entity may be selected.*
+          default: *selector_entity_single_default_empty
+          selector: *button-entity-selector
+        entity80_name:
+          name: Button page 8, Button 10 - Label (Optional)
+          description: "Specify a label for this button (supports up to 10 characters)."
+          default: ""
+          selector:
+            text:
+        entity80_icon:
+          name: Button page 8, Button 10 - Icon (Optional)
+          description: *description_icon_automatic_default
+          default: []
+          selector: *selector_icon
+        entity80_icon_color:
+          name: Button page 8, Button 10 - Icon color
+          description: "Icon color which should be displayed when button is `On`."
+          default: [0, 128, 248]
+          selector: *color_selector
+        entity80_confirm:
+          name: Button page 8, Button 10 - Confirm execution of the button press
           default: false
           description: *description_ask_for_confirmation
           selector:
@@ -5510,6 +6022,86 @@ triggers:
     ##### Button64 Sync #####
     - platform: state
       entity_id: !input 'entity64'
+      id: trigger_buttonpage_state
+
+    ##### Button65 Sync #####
+    - platform: state
+      entity_id: !input 'entity65'
+      id: trigger_buttonpage_state
+
+    ##### Button66 Sync #####
+    - platform: state
+      entity_id: !input 'entity66'
+      id: trigger_buttonpage_state
+
+    ##### Button67 Sync #####
+    - platform: state
+      entity_id: !input 'entity67'
+      id: trigger_buttonpage_state
+
+    ##### Button68 Sync #####
+    - platform: state
+      entity_id: !input 'entity68'
+      id: trigger_buttonpage_state
+
+    ##### Button69 Sync #####
+    - platform: state
+      entity_id: !input 'entity69'
+      id: trigger_buttonpage_state
+
+    ##### Button70 Sync #####
+    - platform: state
+      entity_id: !input 'entity70'
+      id: trigger_buttonpage_state
+
+    ##### Button71 Sync #####
+    - platform: state
+      entity_id: !input 'entity71'
+      id: trigger_buttonpage_state
+
+    ##### Button72 Sync #####
+    - platform: state
+      entity_id: !input 'entity72'
+      id: trigger_buttonpage_state
+
+    ##### Button73 Sync #####
+    - platform: state
+      entity_id: !input 'entity73'
+      id: trigger_buttonpage_state
+
+    ##### Button74 Sync #####
+    - platform: state
+      entity_id: !input 'entity74'
+      id: trigger_buttonpage_state
+
+    ##### Button75 Sync #####
+    - platform: state
+      entity_id: !input 'entity75'
+      id: trigger_buttonpage_state
+
+    ##### Button76 Sync #####
+    - platform: state
+      entity_id: !input 'entity76'
+      id: trigger_buttonpage_state
+
+    ##### Button77 Sync #####
+    - platform: state
+      entity_id: !input 'entity77'
+      id: trigger_buttonpage_state
+
+    ##### Button78 Sync #####
+    - platform: state
+      entity_id: !input 'entity78'
+      id: trigger_buttonpage_state
+
+    ##### Button79 Sync #####
+    - platform: state
+      entity_id: !input 'entity79'
+      id: trigger_buttonpage_state
+
+    ##### Button80 Sync #####
+    - platform: state
+      entity_id: !input 'entity80'
       id: trigger_buttonpage_state
 
   ##### Trigger - Entity pages - State change ###############################################################################################
@@ -9051,7 +9643,7 @@ action:
           buttonpage06: !input button_page06_label
           buttonpage07: !input button_page07_label
           buttonpage08: !input button_page08_label
-        buttons:  # Buttons 1 - 64
+        buttons:  # Buttons 1 - 80
           - entity: !input 'entity01'
             name: !input 'entity01_name'
             icon: !input 'entity01_icon'
@@ -9108,6 +9700,20 @@ action:
             confirm: !input 'entity08_confirm'
             page: buttonpage01
             component: button08
+          - entity: !input 'entity65'
+            name: !input 'entity65_name'
+            icon: !input 'entity65_icon'
+            icon_color_rgb: !input 'entity65_icon_color'
+            confirm: !input 'entity65_confirm'
+            page: buttonpage01
+            component: button09
+          - entity: !input 'entity66'
+            name: !input 'entity66_name'
+            icon: !input 'entity66_icon'
+            icon_color_rgb: !input 'entity66_icon_color'
+            confirm: !input 'entity66_confirm'
+            page: buttonpage01
+            component: button10
           - entity: !input 'entity09'
             name: !input 'entity09_name'
             icon: !input 'entity09_icon'
@@ -9164,6 +9770,20 @@ action:
             confirm: !input 'entity16_confirm'
             page: buttonpage02
             component: button08
+          - entity: !input 'entity67'
+            name: !input 'entity67_name'
+            icon: !input 'entity67_icon'
+            icon_color_rgb: !input 'entity67_icon_color'
+            confirm: !input 'entity67_confirm'
+            page: buttonpage02
+            component: button09
+          - entity: !input 'entity68'
+            name: !input 'entity68_name'
+            icon: !input 'entity68_icon'
+            icon_color_rgb: !input 'entity68_icon_color'
+            confirm: !input 'entity68_confirm'
+            page: buttonpage02
+            component: button10
           - entity: !input 'entity17'
             name: !input 'entity17_name'
             icon: !input 'entity17_icon'
@@ -9220,6 +9840,20 @@ action:
             confirm: !input 'entity24_confirm'
             page: buttonpage03
             component: button08
+          - entity: !input 'entity69'
+            name: !input 'entity69_name'
+            icon: !input 'entity69_icon'
+            icon_color_rgb: !input 'entity69_icon_color'
+            confirm: !input 'entity69_confirm'
+            page: buttonpage03
+            component: button09
+          - entity: !input 'entity70'
+            name: !input 'entity70_name'
+            icon: !input 'entity70_icon'
+            icon_color_rgb: !input 'entity70_icon_color'
+            confirm: !input 'entity70_confirm'
+            page: buttonpage03
+            component: button10
           - entity: !input 'entity25'
             name: !input 'entity25_name'
             icon: !input 'entity25_icon'
@@ -9276,6 +9910,20 @@ action:
             confirm: !input 'entity32_confirm'
             page: buttonpage04
             component: button08
+          - entity: !input 'entity71'
+            name: !input 'entity71_name'
+            icon: !input 'entity71_icon'
+            icon_color_rgb: !input 'entity71_icon_color'
+            confirm: !input 'entity71_confirm'
+            page: buttonpage04
+            component: button09
+          - entity: !input 'entity72'
+            name: !input 'entity72_name'
+            icon: !input 'entity72_icon'
+            icon_color_rgb: !input 'entity72_icon_color'
+            confirm: !input 'entity72_confirm'
+            page: buttonpage04
+            component: button10
           - entity: !input 'entity33'
             name: !input 'entity33_name'
             icon: !input 'entity33_icon'
@@ -9332,6 +9980,20 @@ action:
             confirm: !input 'entity40_confirm'
             page: buttonpage05
             component: button08
+          - entity: !input 'entity73'
+            name: !input 'entity73_name'
+            icon: !input 'entity73_icon'
+            icon_color_rgb: !input 'entity73_icon_color'
+            confirm: !input 'entity73_confirm'
+            page: buttonpage05
+            component: button09
+          - entity: !input 'entity74'
+            name: !input 'entity74_name'
+            icon: !input 'entity74_icon'
+            icon_color_rgb: !input 'entity74_icon_color'
+            confirm: !input 'entity74_confirm'
+            page: buttonpage05
+            component: button10
           - entity: !input 'entity41'
             name: !input 'entity41_name'
             icon: !input 'entity41_icon'
@@ -9388,6 +10050,20 @@ action:
             confirm: !input 'entity48_confirm'
             page: buttonpage06
             component: button08
+          - entity: !input 'entity75'
+            name: !input 'entity75_name'
+            icon: !input 'entity75_icon'
+            icon_color_rgb: !input 'entity75_icon_color'
+            confirm: !input 'entity75_confirm'
+            page: buttonpage06
+            component: button09
+          - entity: !input 'entity76'
+            name: !input 'entity76_name'
+            icon: !input 'entity76_icon'
+            icon_color_rgb: !input 'entity76_icon_color'
+            confirm: !input 'entity76_confirm'
+            page: buttonpage06
+            component: button10
           - entity: !input 'entity49'
             name: !input 'entity49_name'
             icon: !input 'entity49_icon'
@@ -9444,6 +10120,20 @@ action:
             confirm: !input 'entity56_confirm'
             page: buttonpage07
             component: button08
+          - entity: !input 'entity77'
+            name: !input 'entity77_name'
+            icon: !input 'entity77_icon'
+            icon_color_rgb: !input 'entity77_icon_color'
+            confirm: !input 'entity77_confirm'
+            page: buttonpage07
+            component: button09
+          - entity: !input 'entity78'
+            name: !input 'entity78_name'
+            icon: !input 'entity78_icon'
+            icon_color_rgb: !input 'entity78_icon_color'
+            confirm: !input 'entity78_confirm'
+            page: buttonpage07
+            component: button10
           - entity: !input 'entity57'
             name: !input 'entity57_name'
             icon: !input 'entity57_icon'
@@ -9500,6 +10190,20 @@ action:
             confirm: !input 'entity64_confirm'
             page: buttonpage08
             component: button08
+          - entity: !input 'entity79'
+            name: !input 'entity79_name'
+            icon: !input 'entity79_icon'
+            icon_color_rgb: !input 'entity79_icon_color'
+            confirm: !input 'entity79_confirm'
+            page: buttonpage08
+            component: button09
+          - entity: !input 'entity80'
+            name: !input 'entity80_name'
+            icon: !input 'entity80_icon'
+            icon_color_rgb: !input 'entity80_icon_color'
+            confirm: !input 'entity80_confirm'
+            page: buttonpage08
+            component: button10
 
       ##### Entity pages #####
       entities_pages:
