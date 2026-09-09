@@ -231,6 +231,10 @@ Currently, the following pages can be accessed using this method:
 - `buttonpage02`
 - `buttonpage03`
 - `buttonpage04`
+- `buttonpage05`
+- `buttonpage06`
+- `buttonpage07`
+- `buttonpage08`
 - `entitypage01`
 - `entitypage02`
 - `entitypage03`

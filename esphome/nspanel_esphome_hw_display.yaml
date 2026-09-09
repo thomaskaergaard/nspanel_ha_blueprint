@@ -477,6 +477,10 @@ select:
       - buttonpage02
       - buttonpage03
       - buttonpage04
+      - buttonpage05
+      - buttonpage06
+      - buttonpage07
+      - buttonpage08
       - climate
       - entitypage01
       - entitypage02

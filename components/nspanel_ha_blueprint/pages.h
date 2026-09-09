@@ -51,7 +51,11 @@ namespace nspanel_ha_blueprint {
         "confirm",
         "utilities",
         "home_smpl",
-        "debug"
+        "debug",
+        "buttonpage05",
+        "buttonpage06",
+        "buttonpage07",
+        "buttonpage08"
     };
 
     constexpr size_t PAGE_COUNT = sizeof(page_names) / sizeof(page_names[0]);
