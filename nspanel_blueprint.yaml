@@ -2623,47 +2623,6 @@ blueprint:
           description: *description_ask_for_confirmation
           selector:
             boolean:
-    entities_pages:
-      name: Entities pages - Overall (optional)
-      icon: mdi:format-list-bulleted-square
-      description: Select how to display the entities pages.
-      collapsed: true
-      input:
-        home_button06_icon:
-          name: Entity page - Icon (Optional)
-          description: >
-            *HOME page*
-
-            *Icon which should be displayed (Default mdi:format-list-bulleted-square)*
-          default: mdi:format-list-bulleted-square  # EDCF
-          selector: *selector_icon
-        home_button06_icon_color:
-          name: Entity page - Icon color
-          description: *description_icon_color
-          default: [200, 204, 200]
-          selector: *color_selector
-        entitypages_value_alignment:
-          name: Value column alignment
-          description: >
-            *Entity pages*
-            *Select the alignment for the column containing the values on the entity pages.*
-          default: "0"
-          selector:
-            select:
-              multiple: false
-              options:
-                - label: "Right (default)"
-                  value: "0"
-                - label: "Center"
-                  value: "1"
-                - label: "Left"
-                  value: "2"
-        entitypages_show_entities_icons:
-          name: Entity Pages - Show Entity Icons
-          description: "Display icons associated with each entity."
-          default: true
-          selector:
-            boolean:
     button_page_06:
       name: Button page 06 (optional)
       icon: mdi:gesture-tap-button
@@ -2930,47 +2889,6 @@ blueprint:
           name: Button page 6, Button 8 - Confirm execution of the button press
           default: false
           description: *description_ask_for_confirmation
-          selector:
-            boolean:
-    entities_pages:
-      name: Entities pages - Overall (optional)
-      icon: mdi:format-list-bulleted-square
-      description: Select how to display the entities pages.
-      collapsed: true
-      input:
-        home_button06_icon:
-          name: Entity page - Icon (Optional)
-          description: >
-            *HOME page*
-
-            *Icon which should be displayed (Default mdi:format-list-bulleted-square)*
-          default: mdi:format-list-bulleted-square  # EDCF
-          selector: *selector_icon
-        home_button06_icon_color:
-          name: Entity page - Icon color
-          description: *description_icon_color
-          default: [200, 204, 200]
-          selector: *color_selector
-        entitypages_value_alignment:
-          name: Value column alignment
-          description: >
-            *Entity pages*
-            *Select the alignment for the column containing the values on the entity pages.*
-          default: "0"
-          selector:
-            select:
-              multiple: false
-              options:
-                - label: "Right (default)"
-                  value: "0"
-                - label: "Center"
-                  value: "1"
-                - label: "Left"
-                  value: "2"
-        entitypages_show_entities_icons:
-          name: Entity Pages - Show Entity Icons
-          description: "Display icons associated with each entity."
-          default: true
           selector:
             boolean:
     button_page_07:
@@ -3241,47 +3159,6 @@ blueprint:
           description: *description_ask_for_confirmation
           selector:
             boolean:
-    entities_pages:
-      name: Entities pages - Overall (optional)
-      icon: mdi:format-list-bulleted-square
-      description: Select how to display the entities pages.
-      collapsed: true
-      input:
-        home_button06_icon:
-          name: Entity page - Icon (Optional)
-          description: >
-            *HOME page*
-
-            *Icon which should be displayed (Default mdi:format-list-bulleted-square)*
-          default: mdi:format-list-bulleted-square  # EDCF
-          selector: *selector_icon
-        home_button06_icon_color:
-          name: Entity page - Icon color
-          description: *description_icon_color
-          default: [200, 204, 200]
-          selector: *color_selector
-        entitypages_value_alignment:
-          name: Value column alignment
-          description: >
-            *Entity pages*
-            *Select the alignment for the column containing the values on the entity pages.*
-          default: "0"
-          selector:
-            select:
-              multiple: false
-              options:
-                - label: "Right (default)"
-                  value: "0"
-                - label: "Center"
-                  value: "1"
-                - label: "Left"
-                  value: "2"
-        entitypages_show_entities_icons:
-          name: Entity Pages - Show Entity Icons
-          description: "Display icons associated with each entity."
-          default: true
-          selector:
-            boolean:
     button_page_08:
       name: Button page 08 (optional)
       icon: mdi:gesture-tap-button
@@ -3548,47 +3425,6 @@ blueprint:
           name: Button page 8, Button 8 - Confirm execution of the button press
           default: false
           description: *description_ask_for_confirmation
-          selector:
-            boolean:
-    entities_pages:
-      name: Entities pages - Overall (optional)
-      icon: mdi:format-list-bulleted-square
-      description: Select how to display the entities pages.
-      collapsed: true
-      input:
-        home_button06_icon:
-          name: Entity page - Icon (Optional)
-          description: >
-            *HOME page*
-
-            *Icon which should be displayed (Default mdi:format-list-bulleted-square)*
-          default: mdi:format-list-bulleted-square  # EDCF
-          selector: *selector_icon
-        home_button06_icon_color:
-          name: Entity page - Icon color
-          description: *description_icon_color
-          default: [200, 204, 200]
-          selector: *color_selector
-        entitypages_value_alignment:
-          name: Value column alignment
-          description: >
-            *Entity pages*
-            *Select the alignment for the column containing the values on the entity pages.*
-          default: "0"
-          selector:
-            select:
-              multiple: false
-              options:
-                - label: "Right (default)"
-                  value: "0"
-                - label: "Center"
-                  value: "1"
-                - label: "Left"
-                  value: "2"
-        entitypages_show_entities_icons:
-          name: Entity Pages - Show Entity Icons
-          description: "Display icons associated with each entity."
-          default: true
           selector:
             boolean:
     entities_pages:

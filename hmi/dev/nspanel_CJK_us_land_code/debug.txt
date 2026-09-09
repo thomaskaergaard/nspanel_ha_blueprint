@@ -16,7 +16,7 @@ Page debug
         Swide right page ID: disabled
         Fill               : picture
         Back. Picture ID   : 0
-    
+
     Events
         Preinitialize Event
             title.txt+=boot.version.txt
@@ -59,6 +59,18 @@ Page debug
             pages_flags.txt+="\r- is_buttonpage04: "
             covx is_buttonpage04,aux.txt,0,0
             pages_flags.txt+=aux.txt
+            pages_flags.txt+="\r- is_buttonpage05: "
+            covx is_buttonpage05,aux.txt,0,0
+            pages_flags.txt+=aux.txt
+            pages_flags.txt+="\r- is_buttonpage06: "
+            covx is_buttonpage06,aux.txt,0,0
+            pages_flags.txt+=aux.txt
+            pages_flags.txt+="\r- is_buttonpage07: "
+            covx is_buttonpage07,aux.txt,0,0
+            pages_flags.txt+=aux.txt
+            pages_flags.txt+="\r- is_buttonpage08: "
+            covx is_buttonpage08,aux.txt,0,0
+            pages_flags.txt+=aux.txt
             pages_flags.txt+="\r- is_entitypage01: "
             covx is_entitypage01,aux.txt,0,0
             pages_flags.txt+=aux.txt
@@ -84,14 +96,14 @@ Page debug
             covx dim,aux.txt,0,0
             system_vars.txt+=aux.txt
             sendme
-        
+
 Variable (string) aux
     Attributes
         ID            : 1
         Scope         : local
-        Text          : 
+        Text          :
         Max. Text Size: 10
-    
+
 Text title
     Attributes
         ID                      : 3
@@ -118,7 +130,7 @@ Text title
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text global_vars
     Attributes
         ID                      : 4
@@ -145,7 +157,7 @@ Text global_vars
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text pages_flags
     Attributes
         ID                      : 5
@@ -172,7 +184,7 @@ Text pages_flags
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text system_vars
     Attributes
         ID                      : 6
@@ -199,7 +211,7 @@ Text system_vars
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Button button_back
     Attributes
         ID                                  : 2
@@ -227,8 +239,8 @@ Button button_back
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
-    
+
     Events
         Touch Press Event
             page home_page_id
-        
+

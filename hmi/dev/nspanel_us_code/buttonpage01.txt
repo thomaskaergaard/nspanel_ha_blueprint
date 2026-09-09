@@ -16,7 +16,7 @@ Page buttonpage01
         Swide right page ID: disabled
         Fill               : picture
         Back. Picture ID   : 0
-    
+
     Events
         Preinitialize Event
             dim=brightness
@@ -28,10 +28,15 @@ Page buttonpage01
                 vis 255,0
                 vis button_back,1
                 vis page_label,1
-                sys0=is_buttonpage01+is_buttonpage02+is_buttonpage03+is_buttonpage04
+                vis page_index,0
+                page_index.txt=""
+                sys0=is_buttonpage01+is_buttonpage02+is_buttonpage03+is_buttonpage04+is_buttonpage05+is_buttonpage06+is_buttonpage07+is_buttonpage08
                 if(sys0>1)
                 {
-                    page_index.txt+="\xe2\x97\x8f"
+                    if(is_buttonpage01==1)
+                    {
+                        page_index.txt+="\xe2\x97\x8f"
+                    }
                     if(is_buttonpage02==1)
                     {
                         page_index.txt+="\xe2\x97\x8b"
@@ -44,38 +49,54 @@ Page buttonpage01
                     {
                         page_index.txt+="\xe2\x97\x8b"
                     }
+                    if(is_buttonpage05==1)
+                    {
+                        page_index.txt+="\xe2\x97\x8b"
+                    }
+                    if(is_buttonpage06==1)
+                    {
+                        page_index.txt+="\xe2\x97\x8b"
+                    }
+                    if(is_buttonpage07==1)
+                    {
+                        page_index.txt+="\xe2\x97\x8b"
+                    }
+                    if(is_buttonpage08==1)
+                    {
+                        page_index.txt+="\xe2\x97\x8b"
+                    }
                     vis page_index,1
                 }
             }
             sendme
-        
+
 Variable (string) lastclick
     Attributes
         ID            : 4
         Scope         : local
-        Text          : 
+        Text          :
         Max. Text Size: 100
-    
+
 Variable (string) click_comp
     Attributes
         ID            : 7
         Scope         : local
-        Text          : 
+        Text          :
         Max. Text Size: 8
-    
+
 Variable (string) page_name
     Attributes
         ID            : 9
         Scope         : local
         Text          : buttonpage01
         Max. Text Size: 12
-    
+
 Variable (int32) confirm
     Attributes
         ID   : 10
         Scope: local
         Value: 0
-    
+
 Text page_label
     Attributes
         ID                  : 3
@@ -99,12 +120,12 @@ Text page_label
         Horizontal Alignment: left
         Vertical Alignment  : bottom
         Input Type          : character
-        Text                : 
+        Text                :
         Max. Text Size      : 100
         Word wrap           : disabled
         Horizontal Spacing  : 0
         Vertical Spacing    : 0
-    
+
 Text page_index
     Attributes
         ID                  : 5
@@ -128,12 +149,12 @@ Text page_index
         Horizontal Alignment: center
         Vertical Alignment  : center
         Input Type          : character
-        Text                : 
+        Text                :
         Max. Text Size      : 12
         Word wrap           : disabled
         Horizontal Spacing  : 0
         Vertical Spacing    : 0
-    
+
 Text button01pic
     Attributes
         ID                      : 11
@@ -155,12 +176,12 @@ Text button01pic
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 0
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button02pic
     Attributes
         ID                      : 12
@@ -182,12 +203,12 @@ Text button02pic
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 0
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button03pic
     Attributes
         ID                      : 13
@@ -209,12 +230,12 @@ Text button03pic
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 0
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button04pic
     Attributes
         ID                      : 14
@@ -236,12 +257,12 @@ Text button04pic
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 0
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button05pic
     Attributes
         ID                      : 15
@@ -263,12 +284,12 @@ Text button05pic
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 0
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button06pic
     Attributes
         ID                      : 16
@@ -290,12 +311,12 @@ Text button06pic
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 0
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button07pic
     Attributes
         ID                      : 17
@@ -317,12 +338,12 @@ Text button07pic
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 0
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button08pic
     Attributes
         ID                      : 18
@@ -344,12 +365,12 @@ Text button08pic
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 0
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button01text
     Attributes
         ID                      : 19
@@ -371,12 +392,12 @@ Text button01text
         Horizontal Alignment    : center
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 22
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button02text
     Attributes
         ID                      : 20
@@ -398,12 +419,12 @@ Text button02text
         Horizontal Alignment    : center
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 22
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button03text
     Attributes
         ID                      : 21
@@ -425,12 +446,12 @@ Text button03text
         Horizontal Alignment    : center
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 22
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button04text
     Attributes
         ID                      : 22
@@ -452,12 +473,12 @@ Text button04text
         Horizontal Alignment    : center
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 22
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button05text
     Attributes
         ID                      : 23
@@ -479,12 +500,12 @@ Text button05text
         Horizontal Alignment    : center
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 22
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button06text
     Attributes
         ID                      : 24
@@ -506,12 +527,12 @@ Text button06text
         Horizontal Alignment    : center
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 22
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button07text
     Attributes
         ID                      : 25
@@ -533,12 +554,12 @@ Text button07text
         Horizontal Alignment    : center
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 22
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button08text
     Attributes
         ID                      : 26
@@ -560,12 +581,12 @@ Text button08text
         Horizontal Alignment    : center
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 22
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button01icon
     Attributes
         ID                      : 27
@@ -587,12 +608,12 @@ Text button01icon
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 10
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button02icon
     Attributes
         ID                      : 28
@@ -614,12 +635,12 @@ Text button02icon
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 10
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button03icon
     Attributes
         ID                      : 29
@@ -641,12 +662,12 @@ Text button03icon
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 10
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button04icon
     Attributes
         ID                      : 30
@@ -668,12 +689,12 @@ Text button04icon
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 10
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button05icon
     Attributes
         ID                      : 31
@@ -695,12 +716,12 @@ Text button05icon
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 10
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button06icon
     Attributes
         ID                      : 32
@@ -722,12 +743,12 @@ Text button06icon
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 10
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button07icon
     Attributes
         ID                      : 33
@@ -749,12 +770,12 @@ Text button07icon
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 10
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button08icon
     Attributes
         ID                      : 34
@@ -776,12 +797,12 @@ Text button08icon
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 10
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button01bri
     Attributes
         ID                      : 35
@@ -803,12 +824,12 @@ Text button01bri
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 4
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button02bri
     Attributes
         ID                      : 36
@@ -830,12 +851,12 @@ Text button02bri
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 4
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button03bri
     Attributes
         ID                      : 37
@@ -857,12 +878,12 @@ Text button03bri
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 4
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button04bri
     Attributes
         ID                      : 38
@@ -884,12 +905,12 @@ Text button04bri
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 4
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button05bri
     Attributes
         ID                      : 39
@@ -911,12 +932,12 @@ Text button05bri
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 4
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button06bri
     Attributes
         ID                      : 40
@@ -938,12 +959,12 @@ Text button06bri
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 4
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button07bri
     Attributes
         ID                      : 41
@@ -965,12 +986,12 @@ Text button07bri
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 4
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text button08bri
     Attributes
         ID                      : 42
@@ -992,12 +1013,12 @@ Text button08bri
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 4
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Button button_back
     Attributes
         ID                        : 6
@@ -1028,11 +1049,11 @@ Button button_back
         Word wrap                 : disabled
         Horizontal Spacing        : 0
         Vertical Spacing          : 0
-    
+
     Events
         Touch Press Event
             page home_page_id
-        
+
 Hotspot button01
     Attributes
         ID               : 43
@@ -1047,12 +1068,12 @@ Hotspot button01
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
-    
+
     Events
         Touch Press Event
             click_comp.txt="button01"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -1076,7 +1097,7 @@ Hotspot button01
                     printh FF FF FF
                 }
             }
-        
+
 Hotspot button02
     Attributes
         ID               : 44
@@ -1091,12 +1112,12 @@ Hotspot button02
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
-    
+
     Events
         Touch Press Event
             click_comp.txt="button02"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -1120,7 +1141,7 @@ Hotspot button02
                     printh FF FF FF
                 }
             }
-        
+
 Hotspot button03
     Attributes
         ID               : 45
@@ -1135,12 +1156,12 @@ Hotspot button03
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
-    
+
     Events
         Touch Press Event
             click_comp.txt="button03"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -1164,7 +1185,7 @@ Hotspot button03
                     printh FF FF FF
                 }
             }
-        
+
 Hotspot button04
     Attributes
         ID               : 46
@@ -1179,12 +1200,12 @@ Hotspot button04
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
-    
+
     Events
         Touch Press Event
             click_comp.txt="button04"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -1208,7 +1229,7 @@ Hotspot button04
                     printh FF FF FF
                 }
             }
-        
+
 Hotspot button05
     Attributes
         ID               : 47
@@ -1223,12 +1244,12 @@ Hotspot button05
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
-    
+
     Events
         Touch Press Event
             click_comp.txt="button05"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -1252,7 +1273,7 @@ Hotspot button05
                     printh FF FF FF
                 }
             }
-        
+
 Hotspot button06
     Attributes
         ID               : 48
@@ -1267,12 +1288,12 @@ Hotspot button06
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
-    
+
     Events
         Touch Press Event
             click_comp.txt="button06"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -1296,7 +1317,7 @@ Hotspot button06
                     printh FF FF FF
                 }
             }
-        
+
 Hotspot button07
     Attributes
         ID               : 49
@@ -1311,12 +1332,12 @@ Hotspot button07
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
-    
+
     Events
         Touch Press Event
             click_comp.txt="button07"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -1340,7 +1361,7 @@ Hotspot button07
                     printh FF FF FF
                 }
             }
-        
+
 Hotspot button08
     Attributes
         ID               : 50
@@ -1355,12 +1376,12 @@ Hotspot button08
         Effect           : load
         Effect Priority  : 0
         Effect Time      : 300
-    
+
     Events
         Touch Press Event
             click_comp.txt="button08"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -1384,26 +1405,26 @@ Hotspot button08
                     printh FF FF FF
                 }
             }
-        
+
 Timer swipestore
     Attributes
         ID         : 2
         Scope      : local
         Period (ms): 50
         Enabled    : no
-    
+
     Events
         Timer Event
             swipex=tch0
             swipey=tch1
-        
+
 Timer click_timer
     Attributes
         ID         : 8
         Scope      : local
         Period (ms): 800
         Enabled    : no
-    
+
     Events
         Timer Event
             lastclick.txt=page_name.txt+",long_click,"+click_comp.txt
@@ -1414,17 +1435,17 @@ Timer click_timer
             printh 00
             printh FF FF FF
             click_timer.en=0
-        
+
 TouchCap swipe
     Attributes
         ID   : 1
         Scope: local
         Value: 0
-    
+
     Events
         Touch Press Event
             swipestore.en=1 // Start swipestore timer
-        
+
         Touch Release Event
             if(api==0)
             {
@@ -1438,7 +1459,10 @@ TouchCap swipe
                 // From Left to Right
                 if(swipec>swipedx)
                 {
-                    page home_page_id
+                    if(1)
+                    {
+                        page home_page_id
+                    }
                 }
                 // Right to Left
                 swipec2=0-swipedx
@@ -1453,6 +1477,18 @@ TouchCap swipe
                     }else if(is_buttonpage04==1)
                     {
                         page buttonpage04
+                    }else if(is_buttonpage05==1)
+                    {
+                        page buttonpage05
+                    }else if(is_buttonpage06==1)
+                    {
+                        page buttonpage06
+                    }else if(is_buttonpage07==1)
+                    {
+                        page buttonpage07
+                    }else if(is_buttonpage08==1)
+                    {
+                        page buttonpage08
                     }else
                     {
                         page home_page_id
@@ -1466,16 +1502,7 @@ TouchCap swipe
                 // From Up to Down
                 if(swipec>100)
                 {
-                    if(is_buttonpage04==1)
-                    {
-                        page buttonpage04
-                    }else if(is_buttonpage03==1)
-                    {
-                        page buttonpage03
-                    }else if(is_buttonpage02==1)
-                    {
-                        page buttonpage02
-                    }else
+                    if(1)
                     {
                         page home_page_id
                     }
@@ -1484,32 +1511,30 @@ TouchCap swipe
                 swipec2=0-swipedy
                 if(swipec<-100)
                 {
-                    // Assume starting from buttonpage01 and aiming to navigate two pages ahead based on active pages.
-                    if(is_buttonpage02==1) // Check if buttonpage02 is active
+                    if(is_buttonpage02==1)
                     {
-                        if(is_buttonpage03==1) // Then check if buttonpage03 is also active
-                        {
-                            page buttonpage03 // Navigate to buttonpage03 if both are active
-                        }else if(is_buttonpage04==1) // If buttonpage03 is not active, but buttonpage04 is
-                        {
-                            page buttonpage04 // Navigate to buttonpage04, skipping buttonpage03
-                        }else
-                        {
-                            page home_page_id // Fallback if neither buttonpage03 nor buttonpage04 is active
-                        }
-                    }else if(is_buttonpage03==1) // If buttonpage02 is active
+                        page buttonpage02
+                    }else if(is_buttonpage03==1)
                     {
-                        if(is_buttonpage04==1) // Check if buttonpage04 is active
-                        {
-                            page buttonpage04 // Navigate to buttonpage04, effectively skipping two pages
-                        }else
-                        {
-                            page home_page_id // Fallback to home otherwise
-                        }
+                        page buttonpage03
+                    }else if(is_buttonpage04==1)
+                    {
+                        page buttonpage04
+                    }else if(is_buttonpage05==1)
+                    {
+                        page buttonpage05
+                    }else if(is_buttonpage06==1)
+                    {
+                        page buttonpage06
+                    }else if(is_buttonpage07==1)
+                    {
+                        page buttonpage07
+                    }else if(is_buttonpage08==1)
+                    {
+                        page buttonpage08
                     }else
                     {
-                        page home_page_id // Fallback to home if none of the conditions are met
+                        page home_page_id
                     }
                 }
             }
-        

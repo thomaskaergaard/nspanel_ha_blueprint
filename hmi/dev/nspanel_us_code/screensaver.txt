@@ -16,7 +16,7 @@ Page screensaver
         Swide right page ID: disabled
         Fill               : solid color
         Back. Color        : 0
-    
+
     Events
         Preinitialize Event
             vis text,0
@@ -24,10 +24,10 @@ Page screensaver
             screensaver.bco=screensaver_bco
             text.bco=screensaver_bco
             sendme
-        
+
         Touch Release Event
             page wakeup_page_id
-        
+
 Text text
     Attributes
         ID                  : 4
@@ -51,48 +51,48 @@ Text text
         Horizontal Alignment: center
         Vertical Alignment  : center
         Input Type          : character
-        Text                : 
+        Text                :
         Max. Text Size      : 1000
         Word wrap           : enabled
         Horizontal Spacing  : 0
         Vertical Spacing    : 0
-    
+
     Events
         Touch Release Event
             page wakeup_page_id
-        
+
 Timer swipestore
     Attributes
         ID         : 3
         Scope      : local
         Period (ms): 50
         Enabled    : no
-    
+
     Events
         Timer Event
             swipex=tch0
             swipey=tch1
-        
+
 TouchCap wakeup
     Attributes
         ID   : 1
         Scope: local
         Value: 0
-    
+
     Events
         Touch Release Event
             page wakeup_page_id
-        
+
 TouchCap swipe
     Attributes
         ID   : 2
         Scope: local
         Value: 0
-    
+
     Events
         Touch Press Event
             swipestore.en=1 // Start swipestore timer
-        
+
         Touch Release Event
             swipestore.en=0
             // Touch has ended, x
@@ -102,13 +102,61 @@ TouchCap swipe
                 // From Left to Right
                 if(swipec>swipedx&&api==1)
                 {
-                    page buttonpage04
+                    if(is_buttonpage08==1)
+                    {
+                        page buttonpage08
+                    }else if(is_buttonpage07==1)
+                    {
+                        page buttonpage07
+                    }else if(is_buttonpage06==1)
+                    {
+                        page buttonpage06
+                    }else if(is_buttonpage05==1)
+                    {
+                        page buttonpage05
+                    }else if(is_buttonpage04==1)
+                    {
+                        page buttonpage04
+                    }else if(is_buttonpage03==1)
+                    {
+                        page buttonpage03
+                    }else if(is_buttonpage02==1)
+                    {
+                        page buttonpage02
+                    }else if(is_buttonpage01==1)
+                    {
+                        page buttonpage01
+                    }
                 }
                 // Right to Left
                 swipec2=0-swipedx
                 if(swipec<swipec2&&api==1)
                 {
-                    page buttonpage01
+                    if(is_buttonpage01==1)
+                    {
+                        page buttonpage01
+                    }else if(is_buttonpage02==1)
+                    {
+                        page buttonpage02
+                    }else if(is_buttonpage03==1)
+                    {
+                        page buttonpage03
+                    }else if(is_buttonpage04==1)
+                    {
+                        page buttonpage04
+                    }else if(is_buttonpage05==1)
+                    {
+                        page buttonpage05
+                    }else if(is_buttonpage06==1)
+                    {
+                        page buttonpage06
+                    }else if(is_buttonpage07==1)
+                    {
+                        page buttonpage07
+                    }else if(is_buttonpage08==1)
+                    {
+                        page buttonpage08
+                    }
                 }
             }
             // Touch has ended, y
@@ -118,13 +166,60 @@ TouchCap swipe
                 // From Up to Down
                 if(swipec>100&&api==1)
                 {
-                    page buttonpage02
+                    if(is_buttonpage01==1)
+                    {
+                        page buttonpage01
+                    }else if(is_buttonpage02==1)
+                    {
+                        page buttonpage02
+                    }else if(is_buttonpage03==1)
+                    {
+                        page buttonpage03
+                    }else if(is_buttonpage04==1)
+                    {
+                        page buttonpage04
+                    }else if(is_buttonpage05==1)
+                    {
+                        page buttonpage05
+                    }else if(is_buttonpage06==1)
+                    {
+                        page buttonpage06
+                    }else if(is_buttonpage07==1)
+                    {
+                        page buttonpage07
+                    }else if(is_buttonpage08==1)
+                    {
+                        page buttonpage08
+                    }
                 }
                 // Down to Up
                 swipec2=0-swipedy
                 if(swipec<-100&&api==1)
                 {
-                    page buttonpage03
+                    if(is_buttonpage08==1)
+                    {
+                        page buttonpage08
+                    }else if(is_buttonpage07==1)
+                    {
+                        page buttonpage07
+                    }else if(is_buttonpage06==1)
+                    {
+                        page buttonpage06
+                    }else if(is_buttonpage05==1)
+                    {
+                        page buttonpage05
+                    }else if(is_buttonpage04==1)
+                    {
+                        page buttonpage04
+                    }else if(is_buttonpage03==1)
+                    {
+                        page buttonpage03
+                    }else if(is_buttonpage02==1)
+                    {
+                        page buttonpage02
+                    }else if(is_buttonpage01==1)
+                    {
+                        page buttonpage01
+                    }
                 }
             }
-        
