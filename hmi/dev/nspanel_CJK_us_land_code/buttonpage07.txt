@@ -162,8 +162,8 @@ Text button01pic
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 38
-        y coordinate            : 36
+        x coordinate            : 72
+        y coordinate            : 44
         Width                   : 100
         Height                  : 46
         Effect                  : load
@@ -189,8 +189,8 @@ Text button02pic
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 181
-        y coordinate            : 36
+        x coordinate            : 307
+        y coordinate            : 44
         Width                   : 100
         Height                  : 46
         Effect                  : load
@@ -216,8 +216,8 @@ Text button03pic
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 38
-        y coordinate            : 87
+        x coordinate            : 72
+        y coordinate            : 95
         Width                   : 100
         Height                  : 46
         Effect                  : load
@@ -243,8 +243,8 @@ Text button04pic
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 181
-        y coordinate            : 87
+        x coordinate            : 307
+        y coordinate            : 95
         Width                   : 100
         Height                  : 46
         Effect                  : load
@@ -270,8 +270,8 @@ Text button05pic
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 38
-        y coordinate            : 138
+        x coordinate            : 72
+        y coordinate            : 146
         Width                   : 100
         Height                  : 46
         Effect                  : load
@@ -297,8 +297,8 @@ Text button06pic
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 181
-        y coordinate            : 138
+        x coordinate            : 307
+        y coordinate            : 146
         Width                   : 100
         Height                  : 46
         Effect                  : load
@@ -324,8 +324,8 @@ Text button07pic
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 38
-        y coordinate            : 189
+        x coordinate            : 72
+        y coordinate            : 197
         Width                   : 100
         Height                  : 46
         Effect                  : load
@@ -351,8 +351,8 @@ Text button08pic
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 181
-        y coordinate            : 189
+        x coordinate            : 307
+        y coordinate            : 197
         Width                   : 100
         Height                  : 46
         Effect                  : load
@@ -378,8 +378,8 @@ Text button09pic
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 38
-        y coordinate            : 240
+        x coordinate            : 72
+        y coordinate            : 248
         Width                   : 100
         Height                  : 46
         Effect                  : load
@@ -405,8 +405,8 @@ Text button10pic
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 181
-        y coordinate            : 240
+        x coordinate            : 307
+        y coordinate            : 248
         Width                   : 100
         Height                  : 46
         Effect                  : load
@@ -432,8 +432,8 @@ Text button01text
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 47
-        y coordinate            : 60
+        x coordinate            : 81
+        y coordinate            : 68
         Width                   : 82
         Height                  : 18
         Effect                  : load
@@ -459,8 +459,8 @@ Text button02text
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 190
-        y coordinate            : 60
+        x coordinate            : 316
+        y coordinate            : 68
         Width                   : 82
         Height                  : 18
         Effect                  : load
@@ -486,8 +486,8 @@ Text button03text
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 47
-        y coordinate            : 111
+        x coordinate            : 81
+        y coordinate            : 119
         Width                   : 82
         Height                  : 18
         Effect                  : load
@@ -513,8 +513,8 @@ Text button04text
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 190
-        y coordinate            : 111
+        x coordinate            : 316
+        y coordinate            : 119
         Width                   : 82
         Height                  : 18
         Effect                  : load
@@ -540,8 +540,8 @@ Text button05text
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 47
-        y coordinate            : 162
+        x coordinate            : 81
+        y coordinate            : 170
         Width                   : 82
         Height                  : 18
         Effect                  : load
@@ -567,8 +567,8 @@ Text button06text
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 190
-        y coordinate            : 162
+        x coordinate            : 316
+        y coordinate            : 170
         Width                   : 82
         Height                  : 18
         Effect                  : load
@@ -594,8 +594,8 @@ Text button07text
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 47
-        y coordinate            : 213
+        x coordinate            : 81
+        y coordinate            : 221
         Width                   : 82
         Height                  : 18
         Effect                  : load
@@ -621,8 +621,8 @@ Text button08text
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 190
-        y coordinate            : 213
+        x coordinate            : 316
+        y coordinate            : 221
         Width                   : 82
         Height                  : 18
         Effect                  : load
@@ -648,8 +648,8 @@ Text button09text
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 47
-        y coordinate            : 264
+        x coordinate            : 81
+        y coordinate            : 272
         Width                   : 82
         Height                  : 18
         Effect                  : load
@@ -675,8 +675,8 @@ Text button10text
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 190
-        y coordinate            : 264
+        x coordinate            : 316
+        y coordinate            : 272
         Width                   : 82
         Height                  : 18
         Effect                  : load
@@ -702,8 +702,8 @@ Text button01icon
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 38
-        y coordinate            : 40
+        x coordinate            : 72
+        y coordinate            : 48
         Width                   : 48
         Height                  : 20
         Effect                  : load
@@ -729,8 +729,8 @@ Text button02icon
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 181
-        y coordinate            : 40
+        x coordinate            : 307
+        y coordinate            : 48
         Width                   : 48
         Height                  : 20
         Effect                  : load
@@ -756,8 +756,8 @@ Text button03icon
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 38
-        y coordinate            : 91
+        x coordinate            : 72
+        y coordinate            : 99
         Width                   : 48
         Height                  : 20
         Effect                  : load
@@ -783,8 +783,8 @@ Text button04icon
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 181
-        y coordinate            : 91
+        x coordinate            : 307
+        y coordinate            : 99
         Width                   : 48
         Height                  : 20
         Effect                  : load
@@ -810,8 +810,8 @@ Text button05icon
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 38
-        y coordinate            : 142
+        x coordinate            : 72
+        y coordinate            : 150
         Width                   : 48
         Height                  : 20
         Effect                  : load
@@ -837,8 +837,8 @@ Text button06icon
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 181
-        y coordinate            : 142
+        x coordinate            : 307
+        y coordinate            : 150
         Width                   : 48
         Height                  : 20
         Effect                  : load
@@ -864,8 +864,8 @@ Text button07icon
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 38
-        y coordinate            : 193
+        x coordinate            : 72
+        y coordinate            : 201
         Width                   : 48
         Height                  : 20
         Effect                  : load
@@ -891,8 +891,8 @@ Text button08icon
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 181
-        y coordinate            : 193
+        x coordinate            : 307
+        y coordinate            : 201
         Width                   : 48
         Height                  : 20
         Effect                  : load
@@ -918,8 +918,8 @@ Text button09icon
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 38
-        y coordinate            : 244
+        x coordinate            : 72
+        y coordinate            : 252
         Width                   : 48
         Height                  : 20
         Effect                  : load
@@ -945,8 +945,8 @@ Text button10icon
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 181
-        y coordinate            : 244
+        x coordinate            : 307
+        y coordinate            : 252
         Width                   : 48
         Height                  : 20
         Effect                  : load
@@ -972,8 +972,8 @@ Text button01bri
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 84
-        y coordinate            : 44
+        x coordinate            : 118
+        y coordinate            : 52
         Width                   : 48
         Height                  : 14
         Effect                  : load
@@ -999,8 +999,8 @@ Text button02bri
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 226
-        y coordinate            : 44
+        x coordinate            : 353
+        y coordinate            : 52
         Width                   : 48
         Height                  : 14
         Effect                  : load
@@ -1026,8 +1026,8 @@ Text button03bri
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 84
-        y coordinate            : 95
+        x coordinate            : 118
+        y coordinate            : 103
         Width                   : 48
         Height                  : 14
         Effect                  : load
@@ -1053,8 +1053,8 @@ Text button04bri
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 226
-        y coordinate            : 95
+        x coordinate            : 353
+        y coordinate            : 103
         Width                   : 48
         Height                  : 14
         Effect                  : load
@@ -1080,8 +1080,8 @@ Text button05bri
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 84
-        y coordinate            : 146
+        x coordinate            : 118
+        y coordinate            : 154
         Width                   : 48
         Height                  : 14
         Effect                  : load
@@ -1107,8 +1107,8 @@ Text button06bri
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 226
-        y coordinate            : 146
+        x coordinate            : 353
+        y coordinate            : 154
         Width                   : 48
         Height                  : 14
         Effect                  : load
@@ -1134,8 +1134,8 @@ Text button07bri
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 84
-        y coordinate            : 197
+        x coordinate            : 118
+        y coordinate            : 205
         Width                   : 48
         Height                  : 14
         Effect                  : load
@@ -1161,8 +1161,8 @@ Text button08bri
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 226
-        y coordinate            : 197
+        x coordinate            : 353
+        y coordinate            : 205
         Width                   : 48
         Height                  : 14
         Effect                  : load
@@ -1188,8 +1188,8 @@ Text button09bri
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 84
-        y coordinate            : 248
+        x coordinate            : 118
+        y coordinate            : 256
         Width                   : 48
         Height                  : 14
         Effect                  : load
@@ -1215,8 +1215,8 @@ Text button10bri
         Dragging                : 0
         Send Component ID       : disabled
         Opacity                 : 127
-        x coordinate            : 226
-        y coordinate            : 248
+        x coordinate            : 353
+        y coordinate            : 256
         Width                   : 48
         Height                  : 14
         Effect                  : load
@@ -1277,8 +1277,8 @@ Hotspot button01
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
-        x coordinate     : 38
-        y coordinate     : 36
+        x coordinate     : 72
+        y coordinate     : 44
         Width            : 100
         Height           : 46
         Effect           : load
@@ -1321,8 +1321,8 @@ Hotspot button02
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
-        x coordinate     : 181
-        y coordinate     : 36
+        x coordinate     : 307
+        y coordinate     : 44
         Width            : 100
         Height           : 46
         Effect           : load
@@ -1365,8 +1365,8 @@ Hotspot button03
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
-        x coordinate     : 38
-        y coordinate     : 87
+        x coordinate     : 72
+        y coordinate     : 95
         Width            : 100
         Height           : 46
         Effect           : load
@@ -1409,8 +1409,8 @@ Hotspot button04
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
-        x coordinate     : 181
-        y coordinate     : 87
+        x coordinate     : 307
+        y coordinate     : 95
         Width            : 100
         Height           : 46
         Effect           : load
@@ -1453,8 +1453,8 @@ Hotspot button05
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
-        x coordinate     : 38
-        y coordinate     : 138
+        x coordinate     : 72
+        y coordinate     : 146
         Width            : 100
         Height           : 46
         Effect           : load
@@ -1497,8 +1497,8 @@ Hotspot button06
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
-        x coordinate     : 181
-        y coordinate     : 138
+        x coordinate     : 307
+        y coordinate     : 146
         Width            : 100
         Height           : 46
         Effect           : load
@@ -1541,8 +1541,8 @@ Hotspot button07
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
-        x coordinate     : 38
-        y coordinate     : 189
+        x coordinate     : 72
+        y coordinate     : 197
         Width            : 100
         Height           : 46
         Effect           : load
@@ -1585,8 +1585,8 @@ Hotspot button08
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
-        x coordinate     : 181
-        y coordinate     : 189
+        x coordinate     : 307
+        y coordinate     : 197
         Width            : 100
         Height           : 46
         Effect           : load
@@ -1629,8 +1629,8 @@ Hotspot button09
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
-        x coordinate     : 38
-        y coordinate     : 240
+        x coordinate     : 72
+        y coordinate     : 248
         Width            : 100
         Height           : 46
         Effect           : load
@@ -1673,8 +1673,8 @@ Hotspot button10
         Dragging         : 0
         Send Component ID: on press and release
         Opacity          : 127
-        x coordinate     : 181
-        y coordinate     : 240
+        x coordinate     : 307
+        y coordinate     : 248
         Width            : 100
         Height           : 46
         Effect           : load
