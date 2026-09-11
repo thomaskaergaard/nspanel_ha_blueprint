@@ -46,8 +46,8 @@ esphome:
 external_components:
   - source:
       type: git
-      url: https://github.com/Blackymas/NSPanel_HA_Blueprint
-      ref: v${version}
+      url: https://github.com/thomaskaergaard/nspanel_ha_blueprint
+      ref: main
     refresh: 300s
     components:
       - nspanel_ha_blueprint

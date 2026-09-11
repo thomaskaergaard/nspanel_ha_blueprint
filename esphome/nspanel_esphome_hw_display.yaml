@@ -69,6 +69,11 @@ display:
     on_page:
       then:
         - lambda: |-
+            if (x >= PAGE_COUNT) {
+              ESP_LOGE("${TAG_HW_DISPLAY}", "Unknown page id %" PRIu8 " (firmware knows %u pages) - TFT/firmware mismatch",
+                                            x, static_cast<unsigned>(PAGE_COUNT));
+              return;
+            }
             ESP_LOGI("${TAG_HW_DISPLAY}", "Page changed: '%s'->'%s'", page_names[current_page_id], page_names[x]);
             ESP_LOGW_IF("${TAG_HW_DISPLAY}", (x == current_page_id), "Same page");
             page_change->execute(x);

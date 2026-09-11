@@ -63,12 +63,13 @@ python tools/nextion_hmi_sync.py --all
 
 ## What is currently synchronized
 
-The tool currently synchronizes existing page object layout fields from the tracked text exports:
+The tool currently synchronizes these existing page object fields from the tracked text exports:
 
 - `x coordinate`
 - `y coordinate`
 - `Width`
 - `Height`
+- `Max. Text Size`
 
 When the target object exposes `endx` and `endy` in the page block, those are recomputed automatically from the new position and size.
 

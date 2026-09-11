@@ -49,6 +49,7 @@ SOURCE_LAYOUT_FIELDS = {
     "y coordinate": "y",
     "Width": "w",
     "Height": "h",
+    "Max. Text Size": "txt_maxl",
 }
 
 STRING_KEYS = {"objname", "txt", "path", "from", "val0", "val1"}

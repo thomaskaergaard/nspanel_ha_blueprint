@@ -150,7 +150,7 @@ Text page_index
         Vertical Alignment  : center
         Input Type          : character
         Text                :
-        Max. Text Size      : 12
+        Max. Text Size      : 24
         Word wrap           : disabled
         Horizontal Spacing  : 0
         Vertical Spacing    : 0
