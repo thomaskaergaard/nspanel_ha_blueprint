@@ -819,12 +819,19 @@ For local Blueprint modifications:
 
 ### Advanced TFT File Customization
 
-All `.HMI` source files are available in the repository for custom TFT development:
+Tracked Nextion page text exports and shipped `.HMI` files are available in the repository for custom TFT development.
 
-1. **Download Nextion Editor**: [Nextion Editor](https://nextion.tech/nextion-editor/)
-2. **Modify `.HMI` files**: Customize the user interface according to your needs
-3. **Compile to `.TFT`**: Generate custom TFT files for your specific requirements
-4. **Host the file**: Make it accessible via HTTP for your panel
+For the repository-specific `.HMI` sync workflow, see:
+
+- [Regenerating `.HMI` Files](hmi_regeneration.md)
+
+Typical flow:
+
+1. **Edit tracked page text files** under `hmi/dev/*_code/`
+2. **Sync the matching `.HMI` file** with `python tools/nextion_hmi_sync.py`
+3. **Open the `.HMI` in Nextion Editor**: [Nextion Editor](https://nextion.tech/nextion-editor/)
+4. **Compile to `.TFT`**
+5. **Host the file** so your panel can download it
 
 For guidance on Nextion development:
 - [Nextion Instruction Set](https://nextion.tech/instruction-set)

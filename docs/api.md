@@ -241,7 +241,7 @@ ensuring they can easily access detailed information and return to their initial
 **Parameters:**
 - `entity` (string): The unique identifier of the entity (`entity_id` in Home Assistant) for which details are displayed.
 - `back_page` (string): The page identifier to return to after viewing entity details.
-Valid options are `home` for the home page or `buttonpage01` to `buttonpage04` for button pages.
+Valid options are `home` for the home page or `buttonpage01` to `buttonpage08` for button pages.
 No other pages are supported to maintain navigation consistency.
 
 **Home Assistant Example:**

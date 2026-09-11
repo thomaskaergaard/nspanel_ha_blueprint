@@ -150,7 +150,7 @@ api:
     - action: entity_details_show
       variables:
         entity: string     # The ID of the entity for which details are shown. Supports "embedded_climate" for built-in climate control.
-        back_page: string  # Specifies the page to return to. Accepts "home" or "buttonpage01" to "buttonpage04".
+        back_page: string  # Specifies the page to return to. Accepts "home" or "buttonpage01" to "buttonpage08".
       then:
         - lambda: |-
             ESP_LOGV("${TAG_API}", "Action: entity_details_show");

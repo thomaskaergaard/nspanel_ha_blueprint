@@ -48,7 +48,7 @@ Our goal? To make the customization of your NSPanel seamless, intuitive, and com
 ## 🚀 Features
 
 - Easy to use and simple configuration via Blueprint - no change in the code is necessary
-- 32 buttons on 4 button pages with long press function for settings (more buttons are also possible)
+- 80 buttons on 8 button pages with long press function for settings
 - Button design is automatically generated based on the selected entity
 - Buttons show current brightness and cover position in the button itself
 - Buttons label can be assigned via blueprint
@@ -87,7 +87,7 @@ Our goal? To make the customization of your NSPanel seamless, intuitive, and com
 ![3 Buttonpage](https://user-images.githubusercontent.com/41958506/203654022-c6d81263-ce56-4a84-917a-9d4911f19f55.png)
 ![NEW Domains](https://user-images.githubusercontent.com/41958506/206879659-3aea30c1-b126-4d52-a869-abf6adfc8fa1.png)
 
-- Up to 8 buttons per page, across 4 different pages, totaling 32 buttons
+- Up to 10 buttons per page, across 8 different pages, totaling 80 buttons
 - Button design is automatically generated based on the selected entity
 - Buttons display current brightness and cover position directly on the button
 - Button labels can be assigned via blueprint

@@ -16,7 +16,7 @@ Page home_smpl
         Swide right page ID: disabled
         Fill               : picture
         Back. Picture ID   : 0
-    
+
     Events
         Preinitialize Event
             dim=brightness
@@ -48,21 +48,21 @@ Page home_smpl
             right_bt_text.txt=home.right_bt_text.txt
             right_bt_text.font=home.right_bt_text.font
             sendme
-        
+
 Variable (string) lastclick
     Attributes
         ID            : 10
         Scope         : local
-        Text          : 
+        Text          :
         Max. Text Size: 100
-    
+
 Variable (string) click_comp
     Attributes
         ID            : 12
         Scope         : local
-        Text          : 
+        Text          :
         Max. Text Size: 14
-    
+
 Text time
     Attributes
         ID                      : 3
@@ -84,19 +84,19 @@ Text time
         Horizontal Alignment    : right
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 5
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
     Events
         Touch Press Event
             settings_timer.en=1
-        
+
         Touch Release Event
             settings_timer.en=0
-        
+
 Text outdoor_temp
     Attributes
         ID                      : 4
@@ -118,12 +118,12 @@ Text outdoor_temp
         Horizontal Alignment    : left
         Vertical Alignment      : top
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 8
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text date
     Attributes
         ID                      : 5
@@ -145,19 +145,19 @@ Text date
         Horizontal Alignment    : center
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 25
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
     Events
         Touch Press Event
             settings_timer.en=1
-        
+
         Touch Release Event
             settings_timer.en=0
-        
+
 Text left_bt_text
     Attributes
         ID                      : 7
@@ -179,12 +179,12 @@ Text left_bt_text
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 20
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text right_bt_text
     Attributes
         ID                      : 8
@@ -206,12 +206,12 @@ Text right_bt_text
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 20
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
 Text wifi_icon
     Attributes
         ID                      : 9
@@ -233,19 +233,19 @@ Text wifi_icon
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 5
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
     Events
         Touch Press Event
             settings_timer.en=1
-        
+
         Touch Release Event
             settings_timer.en=0
-        
+
 Text bt_icon
     Attributes
         ID                      : 14
@@ -267,19 +267,19 @@ Text bt_icon
         Horizontal Alignment    : center
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 5
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
     Events
         Touch Press Event
             settings_timer.en=1
-        
+
         Touch Release Event
             settings_timer.en=0
-        
+
 Text indr_temp
     Attributes
         ID                      : 19
@@ -301,17 +301,17 @@ Text indr_temp
         Horizontal Alignment    : left
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 8
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
     Events
         Touch Press Event
             click_comp.txt="indr_temp"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -324,7 +324,7 @@ Text indr_temp
                 printh 00
                 printh FF FF FF
             }
-        
+
 Text indr_temp_icon
     Attributes
         ID                      : 20
@@ -346,17 +346,17 @@ Text indr_temp_icon
         Horizontal Alignment    : right
         Vertical Alignment      : center
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 3
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
     Events
         Touch Press Event
             click_comp.txt="indr_temp_icon"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -369,7 +369,7 @@ Text indr_temp_icon
                 printh 00
                 printh FF FF FF
             }
-        
+
 Text meridiem
     Attributes
         ID                      : 21
@@ -391,19 +391,19 @@ Text meridiem
         Horizontal Alignment    : left
         Vertical Alignment      : bottom
         Input Type              : character
-        Text                    : 
+        Text                    :
         Max. Text Size          : 6
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0
-    
+
     Events
         Touch Press Event
             settings_timer.en=1
-        
+
         Touch Release Event
             settings_timer.en=0
-        
+
 Picture weather
     Attributes
         ID               : 6
@@ -419,12 +419,12 @@ Picture weather
         Effect Priority  : 0
         Effect Time      : 300
         Picture ID       : 1
-    
+
     Events
         Touch Press Event
             click_comp.txt="weather"
             click_timer.en=1
-        
+
         Touch Release Event
             if(click_timer.en==1)
             {
@@ -437,7 +437,7 @@ Picture weather
                 printh 00
                 printh FF FF FF
             }
-        
+
 Button b0
     Attributes
         ID                                  : 15
@@ -465,11 +465,11 @@ Button b0
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
-    
+
     Events
         Touch Press Event
             page buttonpage01
-        
+
 Button b1
     Attributes
         ID                                  : 16
@@ -497,11 +497,11 @@ Button b1
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
-    
+
     Events
         Touch Press Event
             page buttonpage02
-        
+
 Button b2
     Attributes
         ID                                  : 17
@@ -529,11 +529,11 @@ Button b2
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
-    
+
     Events
         Touch Press Event
             page buttonpage03
-        
+
 Button b3
     Attributes
         ID                                  : 18
@@ -561,41 +561,41 @@ Button b3
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
-    
+
     Events
         Touch Press Event
             page alarm
-        
+
 Timer swipestore
     Attributes
         ID         : 2
         Scope      : local
         Period (ms): 50
         Enabled    : no
-    
+
     Events
         Timer Event
             swipex=tch0
             swipey=tch1
-        
+
 Timer settings_timer
     Attributes
         ID         : 11
         Scope      : local
         Period (ms): 1000
         Enabled    : no
-    
+
     Events
         Timer Event
             page settings
-        
+
 Timer click_timer
     Attributes
         ID         : 13
         Scope      : local
         Period (ms): 800
         Enabled    : no
-    
+
     Events
         Timer Event
             lastclick.txt="home_smpl,long_click,"+click_comp.txt
@@ -606,23 +606,19 @@ Timer click_timer
             printh 00
             printh FF FF FF
             click_timer.en=0
-        
+
 TouchCap swipe
     Attributes
         ID   : 1
         Scope: local
         Value: 0
-    
+
     Events
         Touch Press Event
             swipestore.en=1 // Start swipestore timer
             dim=brightness // Set brightness to saved value (from HA)
-        
+
         Touch Release Event
-            if(api==0)
-            {
-                page home
-            }
             swipestore.en=0
             // Touch has ended, x
             if(tch0==0)
@@ -631,8 +627,19 @@ TouchCap swipe
                 // From Left to Right
                 if(swipec>swipedx)
                 {
-                    // Navigate back based on active status
-                    if(is_buttonpage04==1)
+                    if(is_buttonpage08==1)
+                    {
+                        page buttonpage08
+                    }else if(is_buttonpage07==1)
+                    {
+                        page buttonpage07
+                    }else if(is_buttonpage06==1)
+                    {
+                        page buttonpage06
+                    }else if(is_buttonpage05==1)
+                    {
+                        page buttonpage05
+                    }else if(is_buttonpage04==1)
                     {
                         page buttonpage04
                     }else if(is_buttonpage03==1)
@@ -646,11 +653,10 @@ TouchCap swipe
                         page buttonpage01
                     }
                 }
-                // Right to Left swipe now navigates to home, looping back to the start.
+                // Right to Left
                 swipec2=0-swipedx
                 if(swipec<swipec2)
                 {
-                    // Navigate back based on active status
                     if(is_buttonpage01==1)
                     {
                         page buttonpage01
@@ -663,6 +669,18 @@ TouchCap swipe
                     }else if(is_buttonpage04==1)
                     {
                         page buttonpage04
+                    }else if(is_buttonpage05==1)
+                    {
+                        page buttonpage05
+                    }else if(is_buttonpage06==1)
+                    {
+                        page buttonpage06
+                    }else if(is_buttonpage07==1)
+                    {
+                        page buttonpage07
+                    }else if(is_buttonpage08==1)
+                    {
+                        page buttonpage08
                     }
                 }
             }
@@ -673,50 +691,60 @@ TouchCap swipe
                 // From Up to Down
                 if(swipec>100)
                 {
-                    if(is_buttonpage04==1&&is_buttonpage03==1)
+                    if(is_buttonpage01==1)
+                    {
+                        page buttonpage01
+                    }else if(is_buttonpage02==1)
+                    {
+                        page buttonpage02
+                    }else if(is_buttonpage03==1)
                     {
                         page buttonpage03
-                    }else if(is_buttonpage04==1&&is_buttonpage02==1)
+                    }else if(is_buttonpage04==1)
                     {
-                        page buttonpage02
-                    }else if(is_buttonpage04==1&&is_buttonpage01==1)
+                        page buttonpage04
+                    }else if(is_buttonpage05==1)
                     {
-                        page buttonpage01
-                    }else if(is_buttonpage03==1&&is_buttonpage02==1)
+                        page buttonpage05
+                    }else if(is_buttonpage06==1)
                     {
-                        page buttonpage02
-                    }else if(is_buttonpage03==1&&is_buttonpage01==1)
+                        page buttonpage06
+                    }else if(is_buttonpage07==1)
                     {
-                        page buttonpage01
-                    }else if(is_buttonpage02==1&&is_buttonpage01==1)
+                        page buttonpage07
+                    }else if(is_buttonpage08==1)
                     {
-                        page buttonpage01
+                        page buttonpage08
                     }
                 }
                 // Down to Up
                 swipec2=0-swipedy
                 if(swipec<-100)
                 {
-                    // Navigate back up the sequence based on active status
-                    if(is_buttonpage01==1&&is_buttonpage02==1)
+                    if(is_buttonpage08==1)
+                    {
+                        page buttonpage08
+                    }else if(is_buttonpage07==1)
+                    {
+                        page buttonpage07
+                    }else if(is_buttonpage06==1)
+                    {
+                        page buttonpage06
+                    }else if(is_buttonpage05==1)
+                    {
+                        page buttonpage05
+                    }else if(is_buttonpage04==1)
+                    {
+                        page buttonpage04
+                    }else if(is_buttonpage03==1)
+                    {
+                        page buttonpage03
+                    }else if(is_buttonpage02==1)
                     {
                         page buttonpage02
-                    }else if(is_buttonpage01==1&&is_buttonpage03==1)
+                    }else if(is_buttonpage01==1)
                     {
-                        page buttonpage03
-                    }else if(is_buttonpage01==1&&is_buttonpage04==1)
-                    {
-                        page buttonpage04
-                    }else if(is_buttonpage02==1&&is_buttonpage03==1)
-                    {
-                        page buttonpage03
-                    }else if(is_buttonpage02==1&&is_buttonpage04==1)
-                    {
-                        page buttonpage04
-                    }else if(is_buttonpage03==1&&is_buttonpage04==1)
-                    {
-                        page buttonpage04
+                        page buttonpage01
                     }
                 }
             }
-        
