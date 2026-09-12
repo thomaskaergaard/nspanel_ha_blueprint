@@ -11,6 +11,8 @@ Nextion2Text.*
 
 # Ignore dev folder
 dev
+# ...except the tracked HMI sources (text exports and pictures used by tools/nextion_hmi_sync.py)
+!/hmi/dev/
 .esphome
 /components/nspanel_ha_blueprint/__pycache__
 

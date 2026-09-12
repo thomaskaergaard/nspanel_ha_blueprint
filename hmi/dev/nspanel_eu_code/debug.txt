@@ -59,16 +59,16 @@ Page debug
             pages_flags.txt+="\r- is_buttonpage04: "
             covx is_buttonpage04,aux.txt,0,0
             pages_flags.txt+=aux.txt
-            pages_flags.txt+="\r- is_buttonpage05: "
+            pages_flags.txt+="\r- is_buttonpage05:"
             covx is_buttonpage05,aux.txt,0,0
             pages_flags.txt+=aux.txt
-            pages_flags.txt+="\r- is_buttonpage06: "
+            pages_flags.txt+="\r- is_buttonpage06:"
             covx is_buttonpage06,aux.txt,0,0
             pages_flags.txt+=aux.txt
-            pages_flags.txt+="\r- is_buttonpage07: "
+            pages_flags.txt+="\r- is_buttonpage07:"
             covx is_buttonpage07,aux.txt,0,0
             pages_flags.txt+=aux.txt
-            pages_flags.txt+="\r- is_buttonpage08: "
+            pages_flags.txt+="\r- is_buttonpage08:"
             covx is_buttonpage08,aux.txt,0,0
             pages_flags.txt+=aux.txt
             pages_flags.txt+="\r- is_entitypage01: "
@@ -180,7 +180,7 @@ Text pages_flags
         Vertical Alignment      : top
         Input Type              : character
         Text                    : Pages flags:
-        Max. Text Size          : 300
+        Max. Text Size          : 400
         Word wrap               : disabled
         Horizontal Spacing      : 0
         Vertical Spacing        : 0

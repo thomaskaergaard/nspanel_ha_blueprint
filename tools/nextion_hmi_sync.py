@@ -8,6 +8,7 @@ trying to rebuild the full Nextion container directory from scratch.
 from __future__ import annotations
 
 import argparse
+import re
 import struct
 import sys
 from dataclasses import dataclass
@@ -53,6 +54,36 @@ SOURCE_LAYOUT_FIELDS = {
 }
 
 STRING_KEYS = {"objname", "txt", "path", "from", "val0", "val1"}
+
+# Event headers in the text exports -> event marks in the .HMI page blocks.
+SOURCE_EVENTS = {
+    "Preinitialize Event": "codesload",
+    "Postinitialize Event": "codesloadend",
+    "Touch Press Event": "codesdown",
+    "Touch Release Event": "codesup",
+    "Page Exit Event": "codesunload",
+    "Timer Event": "codestimer",
+    "Touch Move Event": "codesslide",
+}
+EVENT_HEADER_INDENT = " " * 8
+CODE_INDENT = " " * 12
+CODE_MARK_RE = re.compile(r"(codes[a-z]+)-(\d+)")
+ESCAPE_RE = re.compile(rb"\\x([0-9a-fA-F]{2})")
+
+# The stamp of a page block can only be recomputed for block lengths that are
+# already known, so code changes are balanced back to the original length with a
+# comment line in the page's Page Exit event (comments are not compiled into the TFT).
+PAD_EVENT = "codesunload"
+PAD_PREFIX = b"//hmi_sync pad"
+
+# Pictures: "<n>.is" holds the imported PNG, "<n>.i" the converted RGB565 data used for the TFT.
+# Tracked replacements live in hmi/dev/<variant>_pictures/<picture id>.png.
+PICTURE_MAGIC = b"\x0a\x64\x01\x03"
+PICTURE_SOURCE_MAGIC = b"\x0a\x64\x01\x01"
+PICTURE_HEADER = 24
+PICTURE_SOURCE_HEADER = 27
+PICTURE_RAW_DATA_HEADER = 20  # mode 0 (uncompressed) + zero padding before the pixels
+DIRECTORY_ENTRY = 28
 
 
 def _build_crc_table() -> List[int]:
@@ -204,6 +235,53 @@ def parse_source_layouts(code_dir: Path) -> Dict[str, Dict[str, Dict[str, int]]]
     return pages
 
 
+def encode_code_line(line: str) -> bytes:
+    """Convert a text-export code line (after the base indent) to the bytes stored in the .HMI.
+
+    The exports indent 4 spaces per level where the .HMI stores 2, and write raw bytes as ``\\xNN``.
+    """
+    content = line.lstrip(" ")
+    indent = " " * ((len(line) - len(content)) // 2)
+    return ESCAPE_RE.sub(lambda m: bytes([int(m.group(1), 16)]), (indent + content.rstrip()).encode("utf-8"))
+
+
+def parse_source_code(code_dir: Path) -> Dict[str, Dict[str, Dict[str, List[bytes]]]]:
+    """Return {page: {object: {event mark: [code lines]}}} from the tracked text exports."""
+    pages: Dict[str, Dict[str, Dict[str, List[bytes]]]] = {}
+    for path in sorted(code_dir.glob("*.txt")):
+        if path.stem == "Program.s":
+            continue
+        objects: Dict[str, Dict[str, List[bytes]]] = {}
+        current_name = None
+        current_event = None
+        for raw_line in path.read_text(encoding="utf-8").splitlines():
+            if raw_line and not raw_line.startswith(" "):
+                current_name = raw_line.rsplit(" ", 1)[-1]
+                current_event = None
+                continue
+            if raw_line.startswith(EVENT_HEADER_INDENT) and not raw_line.startswith(EVENT_HEADER_INDENT + " "):
+                mark = SOURCE_EVENTS.get(raw_line.strip())
+                if mark and current_name is not None:
+                    current_event = objects.setdefault(current_name, {}).setdefault(mark, [])
+                else:
+                    current_event = None
+                continue
+            if current_event is None:
+                continue
+            if raw_line.startswith(CODE_INDENT):
+                current_event.append(encode_code_line(raw_line[len(CODE_INDENT):]))
+            elif raw_line.strip() == "":
+                current_event.append(b"")
+            else:
+                current_event = None
+        for events in objects.values():
+            for lines in events.values():
+                while lines and lines[-1] == b"":
+                    lines.pop()
+        pages[path.stem] = objects
+    return pages
+
+
 def decode_value(key: str, raw: bytes):
     if key in STRING_KEYS:
         return raw.rstrip(b"\0").decode("latin1")
@@ -239,6 +317,7 @@ def parse_page_block(block: bytes):
         body = block[header_size + obj_off : header_size + obj_off + obj_len]
         items = []
         pos = 0
+        code_left = 0
         while pos + 4 <= len(body):
             length = read_u32(body, pos)
             if length == 0:
@@ -246,12 +325,19 @@ def parse_page_block(block: bytes):
                 pos += 4
                 continue
             record = body[pos + 4 : pos + 4 + length]
-            if length >= 16:
+            if code_left:
+                items.append({"kind": "code", "raw": record})
+                code_left -= 1
+            elif length >= 16:
                 key = record[:16].split(b"\0", 1)[0].decode("latin1")
                 raw = record[16:]
                 items.append({"kind": "attr", "key": key, "raw": raw, "value": decode_value(key, raw)})
             else:
-                items.append({"kind": "mark", "text": record.decode("latin1")})
+                text = record.decode("latin1")
+                items.append({"kind": "mark", "text": text})
+                match = CODE_MARK_RE.fullmatch(text)
+                if match:
+                    code_left = int(match.group(2))
             pos += 4 + length
         objects.append(items)
     return page_name, bytes(block[:header_size]), objects
@@ -268,6 +354,9 @@ def build_page_block(page_name: str, header: bytes, objects: list) -> bytearray:
                 text = item["text"].encode("latin1")
                 parts.append(struct.pack("<I", len(text)))
                 parts.append(text)
+            elif item["kind"] == "code":
+                parts.append(struct.pack("<I", len(item["raw"])))
+                parts.append(item["raw"])
             else:
                 key = item["key"].encode("latin1")
                 padded_key = key + b"\0" * (16 - len(key))
@@ -325,12 +414,246 @@ def apply_layout_updates(page_name: str, objects: list, source_objects: Dict[str
     return changed
 
 
-def sync_variant(variant: str, check_only: bool) -> str:
+def object_name(items: list, page_name: str) -> str:
+    for item in items:
+        if item["kind"] == "attr" and item["key"] == "objname":
+            return item["value"]
+    return page_name
+
+
+def is_pad(line: bytes) -> bool:
+    return line.strip().startswith(PAD_PREFIX)
+
+
+def normalize_code(lines: List[bytes]) -> List[bytes]:
+    # Indentation may be trimmed by balance_length(), and blank lines cannot be stored
+    return [line.strip() for line in lines if line.strip() and not is_pad(line)]
+
+
+def split_events(items: list):
+    """Yield (mark index, event mark, code line count) for each event in an object."""
+    for index, item in enumerate(items):
+        if item["kind"] == "mark":
+            match = CODE_MARK_RE.fullmatch(item["text"])
+            if match:
+                yield index, match.group(1), int(match.group(2))
+
+
+def set_event_lines(items: list, mark_index: int, event: str, old_count: int, lines: List[bytes]) -> None:
+    items[mark_index + 1 : mark_index + 1 + old_count] = [{"kind": "code", "raw": line} for line in lines]
+    items[mark_index] = {"kind": "mark", "text": f"{event}-{len(lines)}"}
+
+
+def apply_code_updates(page_name: str, objects: list, source_objects: Dict[str, Dict[str, List[bytes]]]) -> List[str]:
+    changed: List[str] = []
+    seen_objects = set()
+    for items in objects:
+        name = object_name(items, page_name)
+        seen_objects.add(name)
+        source_events = source_objects.get(name, {})
+        seen_events = set()
+        for mark_index, event, count in list(split_events(items)):
+            seen_events.add(event)
+            current = [item["raw"] for item in items[mark_index + 1 : mark_index + 1 + count]]
+            wanted = [line for line in source_events.get(event, []) if line.strip()]
+            if normalize_code(current) == normalize_code(wanted):
+                continue
+            set_event_lines(items, mark_index, event, count, wanted + [line for line in current if is_pad(line)])
+            changed.append(f"{name}.{event}")
+        missing = [event for event, lines in source_events.items() if event not in seen_events and normalize_code(lines)]
+        if missing:
+            raise RuntimeError(f"{page_name}.{name}: event(s) {', '.join(missing)} not present in the .HMI object")
+    missing_objects = [
+        name for name, events in source_objects.items()
+        if name not in seen_objects and any(normalize_code(lines) for lines in events.values())
+    ]
+    if missing_objects:
+        raise RuntimeError(f"{page_name}: object(s) {', '.join(missing_objects)} not present in the .HMI page")
+    return changed
+
+
+def set_pad(page_items: list, text_len) -> None:
+    """Replace the pad line in the page's Page Exit event (text_len=None removes it)."""
+    for mark_index, event, count in split_events(page_items):
+        if event != PAD_EVENT:
+            continue
+        lines = [item["raw"] for item in page_items[mark_index + 1 : mark_index + 1 + count] if not is_pad(item["raw"])]
+        if text_len is not None:
+            lines.append(PAD_PREFIX + b"-" * (text_len - len(PAD_PREFIX)))
+        set_event_lines(page_items, mark_index, event, count, lines)
+        return
+    raise RuntimeError("page object has no Page Exit event to hold the size pad")
+
+
+def pad_len(page_items: list):
+    for mark_index, event, count in split_events(page_items):
+        if event == PAD_EVENT:
+            for item in page_items[mark_index + 1 : mark_index + 1 + count]:
+                if is_pad(item["raw"]):
+                    return len(item["raw"])
+    return None
+
+
+def strip_indentation(objects: list, amount: int) -> None:
+    """Remove `amount` bytes of leading whitespace from code lines, starting with the last ones."""
+    for items in reversed(objects):
+        for item in reversed(items):
+            if amount == 0:
+                return
+            if item["kind"] != "code" or is_pad(item["raw"]):
+                continue
+            indent = len(item["raw"]) - len(item["raw"].lstrip(b" \t"))
+            take = min(indent, amount)
+            item["raw"] = item["raw"][take:]
+            amount -= take
+    if amount:
+        raise RuntimeError(f"not enough indentation to keep the block size ({amount} byte(s) short)")
+
+
+def balance_length(page_name: str, header: bytes, objects: list, target: int) -> None:
+    """Bring the rebuilt page block back to `target` bytes with the pad line and indentation trimming."""
+    try:
+        _balance_length(page_name, header, objects, target)
+    except RuntimeError as exc:
+        raise RuntimeError(f"{page_name}: {exc}; make the text change size-neutral for this page") from exc
+
+
+def _balance_length(page_name: str, header: bytes, objects: list, target: int) -> None:
+    page_items = next(items for items in objects if object_name(items, page_name) == page_name)
+    set_pad(page_items, None)
+    min_pad = 4 + len(PAD_PREFIX)  # record length field + prefix
+    for _ in range(8):
+        diff = len(build_page_block(page_name, header, objects)) - target
+        if diff == 0:
+            return
+        pad = pad_len(page_items)
+        if diff > 0:
+            if pad is not None and pad - diff >= len(PAD_PREFIX):
+                set_pad(page_items, pad - diff)
+            elif pad is not None:
+                set_pad(page_items, None)
+            else:
+                strip_indentation(objects, diff)
+        elif pad is not None:
+            set_pad(page_items, pad - diff)
+        elif -diff >= min_pad:
+            set_pad(page_items, -diff - 4)
+        else:
+            strip_indentation(objects, min_pad + diff)
+    raise RuntimeError("could not balance the block size")
+
+
+def live_entries(data: bytes) -> Dict[str, DirectoryEntry]:
+    return {entry.name: entry for entry in read_directory(data) if not entry.stale}
+
+
+def picture_names(data: bytes) -> List[str]:
+    """Return the resource base names of the pictures, indexed by picture id (from main.HMI)."""
+    main = live_entries(data)["main.HMI"]
+    block = data[main.off : main.off + main.size]
+    start, count = read_u32(block, 24), read_u32(block, 28)
+    names = []
+    for index in range(count):
+        record = block[start + index * 16 : start + index * 16 + 16]
+        kind = record[:8].rstrip(b"\0")
+        name = record[8:].rstrip(b"\0").decode("latin1")
+        if kind == b"i":
+            names.append(name[: -len(".i")])
+    return names
+
+
+def picture_sources(data: bytes) -> Dict[int, bytes]:
+    """Return {picture id: imported PNG bytes}."""
+    entries = live_entries(data)
+    sources = {}
+    for picture_id, name in enumerate(picture_names(data)):
+        entry = entries.get(name + ".is")
+        if entry is None:
+            continue
+        block = data[entry.off : entry.off + entry.size]
+        if block[:4] == PICTURE_SOURCE_MAGIC:
+            sources[picture_id] = bytes(block[read_u32(block, 8) :])
+    return sources
+
+
+def build_picture_blocks(png: bytes):
+    """Return (.is block, .i block) for a PNG; the .i data is stored uncompressed (mode 0)."""
+    try:
+        from PIL import Image
+    except ImportError as exc:
+        raise RuntimeError("Pillow is required to write pictures (pip install pillow)") from exc
+    import io
+
+    image = Image.open(io.BytesIO(png)).convert("RGB")
+    width, height = image.size
+    size = struct.pack("<HH", width, height)
+    source = PICTURE_SOURCE_MAGIC + struct.pack("<II", 0, PICTURE_SOURCE_HEADER) + size
+    source += struct.pack("<II", len(png), 0) + b"png" + png
+
+    rgb = image.tobytes()
+    pixels = bytearray()
+    for i in range(0, len(rgb), 3):
+        r, g, b = rgb[i], rgb[i + 1], rgb[i + 2]
+        pixels += struct.pack("<H", ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3))
+    payload = bytes(PICTURE_RAW_DATA_HEADER) + bytes(pixels)
+    picture = PICTURE_MAGIC + struct.pack("<II", 0, PICTURE_HEADER) + size + struct.pack("<II", len(payload), 0) + payload
+    return source, picture
+
+
+def relocate_block(data: bytearray, name: str, block: bytes) -> None:
+    """Append `block` as the new content of resource `name`, marking the old entry stale (as Nextion Editor does)."""
+    count = read_u32(data, 0)
+    first_block = min(entry.off for entry in read_directory(data) if entry.size)
+    if 4 + (count + 1) * DIRECTORY_ENTRY > first_block:
+        raise RuntimeError(f"no room left in the .HMI directory for {name}")
+    for index in range(count):
+        off = 4 + index * DIRECTORY_ENTRY
+        entry_name = data[off : off + 16].split(b"\0", 1)[0].decode("latin1")
+        flags = read_u32(data, off + 24)
+        if entry_name == name and not flags & 1:
+            data[off : off + 16] = bytes(16)
+            struct.pack_into("<I", data, off + 24, flags | 1)
+            new_off = 4 + count * DIRECTORY_ENTRY
+            data[new_off : new_off + 16] = name.encode("latin1").ljust(16, b"\0")
+            struct.pack_into("<III", data, new_off + 16, len(data), len(block), flags & ~1)
+            struct.pack_into("<I", data, 0, count + 1)
+            data.extend(block)
+            return
+    raise RuntimeError(f"resource {name} not found in the .HMI directory")
+
+
+def sync_pictures(variant: str, data: bytearray, details: List[str], check_only: bool) -> int:
+    picture_dir = VARIANTS[variant][1].parent / f"{variant}_pictures"
+    if not picture_dir.is_dir():
+        return 0
+    names = picture_names(data)
+    sources = picture_sources(data)
+    changed = 0
+    for path in sorted(picture_dir.glob("*.png")):
+        picture_id = int(path.stem)
+        if picture_id >= len(names):
+            raise RuntimeError(f"{path.name}: picture {picture_id} does not exist in {variant}")
+        png = path.read_bytes()
+        if sources.get(picture_id) == png:
+            continue
+        if not check_only:
+            source, picture = build_picture_blocks(png)
+            relocate_block(data, names[picture_id] + ".is", source)
+            relocate_block(data, names[picture_id] + ".i", picture)
+        details.append(f"  picture {picture_id}: {path.relative_to(REPO_ROOT)}")
+        changed += 1
+    return changed
+
+
+def sync_variant(variant: str, check_only: bool, verbose: bool = False) -> str:
     hmi_path, code_dir = VARIANTS[variant]
     source_pages = parse_source_layouts(code_dir)
+    source_code = parse_source_code(code_dir)
     data = bytearray(hmi_path.read_bytes())
     changed_pages = 0
     changed_fields = 0
+    changed_events = 0
+    details: List[str] = []
 
     for entry in read_directory(data):
         if entry.stale or not entry.name.endswith(".pa"):
@@ -343,31 +666,46 @@ def sync_variant(variant: str, check_only: bool) -> str:
             continue
 
         page_name, header, objects = parse_page_block(original)
-        source_objects = source_pages.get(page_name)
-        if not source_objects:
+        if page_name not in source_pages and page_name not in source_code:
             continue
 
-        page_field_changes = apply_layout_updates(page_name, objects, source_objects)
-        if page_field_changes == 0:
+        page_field_changes = apply_layout_updates(page_name, objects, source_pages.get(page_name, {}))
+        try:
+            page_code_changes = apply_code_updates(page_name, objects, source_code.get(page_name, {}))
+        except RuntimeError as exc:
+            raise RuntimeError(f"{hmi_path.name}:{exc}") from exc
+        if page_field_changes == 0 and not page_code_changes:
             continue
+        details.extend(f"  {page_name}: code {event}" for event in page_code_changes)
+        if page_field_changes:
+            details.append(f"  {page_name}: {page_field_changes} layout field(s)")
 
+        try:
+            balance_length(page_name, header, objects, entry.size)
+        except RuntimeError as exc:
+            raise RuntimeError(f"{hmi_path.name}:{exc}") from exc
         rebuilt = build_page_block(page_name, header, objects)
         if len(rebuilt) != entry.size:
-            raise RuntimeError(
-                f"{hmi_path.name}:{page_name} changed size {entry.size}->{len(rebuilt)}; "
-                "this tool only supports length-preserving updates"
-            )
+            raise RuntimeError(f"{hmi_path.name}:{page_name} changed size {entry.size}->{len(rebuilt)}")
         reseal(rebuilt, original)
         data[entry.off : entry.off + entry.size] = rebuilt
         changed_pages += 1
         changed_fields += page_field_changes
+        changed_events += len(page_code_changes)
 
-    if not check_only and changed_pages:
+    try:
+        changed_pictures = sync_pictures(variant, data, details, check_only)
+    except RuntimeError as exc:
+        raise RuntimeError(f"{hmi_path.name}:{exc}") from exc
+
+    if not check_only and (changed_pages or changed_pictures):
         hmi_path.write_bytes(data)
 
     mode = "check" if check_only else "sync"
-    if changed_pages:
-        return f"{mode}: {variant}: {changed_pages} page(s), {changed_fields} field(s)"
+    if changed_pages or changed_pictures:
+        summary = (f"{mode}: {variant}: {changed_pages} page(s), {changed_fields} field(s), "
+                   f"{changed_events} event(s), {changed_pictures} picture(s)")
+        return "\n".join([summary] + details) if verbose else summary
     return f"{mode}: {variant}: up to date"
 
 
@@ -377,6 +715,7 @@ def parse_args(argv: Iterable[str]) -> argparse.Namespace:
     parser.add_argument("--all", action="store_true", help="Process all known variants")
     parser.add_argument("--check", action="store_true", help="Report required updates without writing files")
     parser.add_argument("--list-variants", action="store_true", help="List the known HMI/code-dir mappings")
+    parser.add_argument("-v", "--verbose", action="store_true", help="List each changed page, event and layout field")
     args = parser.parse_args(list(argv))
     if not args.list_variants and not args.all and not args.variant:
         parser.error("choose --variant, --all, or --list-variants")
@@ -395,7 +734,7 @@ def main(argv: Iterable[str]) -> int:
     variants = sorted(VARIANTS) if args.all else args.variant
     try:
         for variant in variants:
-            print(sync_variant(variant, check_only=args.check))
+            print(sync_variant(variant, check_only=args.check, verbose=args.verbose))
     except RuntimeError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
