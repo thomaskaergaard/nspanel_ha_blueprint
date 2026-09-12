@@ -166,7 +166,11 @@ script:
           ESP_LOGV("${TAG_HW_BUTTONS}", "    left_state:       %s", ONOFF(id(hardware_settings).button_left_state));
           ESP_LOGV("${TAG_HW_BUTTONS}", "    right_enabled:    %s", YESNO(id(hardware_settings).button_right_enabled));
           ESP_LOGV("${TAG_HW_BUTTONS}", "    right_state:      %s", ONOFF(id(hardware_settings).button_right_state));
-          if ((id(buttons_bars_pages) & (1 << current_page_id)) == 0) {
+          // Button pages 05-08 (ids 30-33) don't fit the 32-bit mask; they follow the "Buttons pages" setting (bits 12-15)
+          uint8_t bars_page_id = current_page_id;
+          if (current_page_id < PAGE_COUNT && strncmp(page_names[current_page_id], "buttonpage", 10) == 0)
+            bars_page_id = get_page_id("buttonpage01");
+          if (bars_page_id >= 32 || (id(buttons_bars_pages) & (1UL << bars_page_id)) == 0) {
             ESP_LOGV("${TAG_HW_BUTTONS}", "Buttons bars not visible");
             return;
           }
