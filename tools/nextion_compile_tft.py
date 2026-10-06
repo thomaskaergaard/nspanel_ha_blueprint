@@ -105,13 +105,58 @@ def click_compile(main) -> bool:
     return False
 
 
+def process_windows(pid: int):
+    return Desktop(backend="uia").windows(process=pid)
+
+
+def export_tft(app, main, pid: int, out_dir: Path, debug_dir: Path) -> None:
+    before = {w.handle for w in process_windows(pid)}
+    main.set_focus()
+    main.child_window(title="File", control_type="MenuItem").click_input()
+    time.sleep(2)
+    screenshot(debug_dir, "file_menu")
+    items = []
+    for win in process_windows(pid):
+        items += [c for c in win.descendants(control_type="MenuItem") if "tft" in c.window_text().lower()]
+    print(f"TFT menu items: {[i.window_text() for i in items]}")
+    if not items:
+        for win in process_windows(pid):
+            dump_tree(app.window(handle=win.handle), debug_dir, f"menu_{win.handle}")
+        raise SystemExit("No TFT output entry in the File menu")
+    items[0].click_input()
+    time.sleep(3)
+
+    dialogs = [w for w in process_windows(pid) if w.handle not in before]
+    if not dialogs:
+        dialogs = [w for w in process_windows(pid) if w.handle != main.handle]
+    screenshot(debug_dir, "tft_output_dialog")
+    for win in dialogs:
+        print(f"output dialog: {win.window_text()!r}")
+        dlg = app.window(handle=win.handle)
+        dump_tree(dlg, debug_dir, f"output_dialog_{win.handle}")
+        edits = dlg.descendants(control_type="Edit")
+        print(f"edit fields: {[e.window_text() for e in edits]}")
+        if edits:
+            edits[0].set_edit_text(str(out_dir))
+        buttons = dlg.descendants(control_type="Button")
+        print(f"buttons: {[b.window_text() for b in buttons]}")
+        for b in buttons:
+            if b.window_text().strip().lower() in ("output", "ok", "export", "save"):
+                b.click_input()
+                print(f"clicked {b.window_text()!r}")
+                break
+    time.sleep(3)
+    screenshot(debug_dir, "tft_output_clicked")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("hmi", type=Path)
     parser.add_argument("--editor-dir", type=Path, required=True)
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--debug-dir", type=Path, required=True)
-    parser.add_argument("--timeout", type=int, default=900)
+    parser.add_argument("--timeout", type=int, default=600)
+    parser.add_argument("--compile-wait", type=int, default=90)
     args = parser.parse_args()
 
     hmi = args.hmi.resolve()
@@ -149,8 +194,13 @@ def main() -> int:
         main.set_focus()
         keyboard.send_keys("{F5}")
     compile_started = time.time()
+    time.sleep(args.compile_wait)
+    screenshot(debug_dir, "compiled")
 
-    roots = search_roots(args.editor_dir, hmi)
+    # Compile only checks the project; File > "TFT file output" writes the .tft.
+    export_tft(app, main, proc.pid, args.out_dir.resolve(), debug_dir)
+
+    roots = [args.out_dir.resolve()] + search_roots(args.editor_dir, hmi)
     tft = None
     while time.time() - started < args.timeout:
         tft = find_new_tft(roots, compile_started - 5)
@@ -173,7 +223,8 @@ def main() -> int:
         print("No .tft produced before timeout", file=sys.stderr)
         return 1
     target = args.out_dir / f"{hmi.stem}.tft"
-    shutil.copy2(tft, target)
+    if tft.resolve() != target.resolve():
+        shutil.copy2(tft, target)
     print(f"{target} ({target.stat().st_size} bytes)")
     return 0
 
