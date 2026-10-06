@@ -35,6 +35,8 @@ def screenshot(debug_dir: Path, name: str) -> None:
 
 def dump_tree(window, debug_dir: Path, name: str) -> None:
     try:
+        if isinstance(window, int):
+            window = Application(backend="uia").connect(handle=window).window(handle=window)
         path = debug_dir / f"{name}_controls.txt"
         window.print_control_identifiers(depth=None, filename=str(path))
     except Exception as err:
@@ -81,7 +83,8 @@ def dismiss_dialogs(pid: int, main_handle: int | None, debug_dir: Path) -> bool:
         title = win.window_text()
         print(f"dialog: {title!r}")
         screenshot(debug_dir, f"dialog_{title[:20] or 'untitled'}")
-        dump_tree(Application(backend="uia").connect(handle=win.handle).window(handle=win.handle), debug_dir, f"dialog_{win.handle}")
+        if win.handle:
+            dump_tree(win.handle, debug_dir, f"dialog_{win.handle}")
         for label in DIALOG_BUTTONS:
             buttons = win.descendants(title=label, control_type="Button")
             if buttons:
@@ -109,8 +112,7 @@ def process_windows(pid: int):
     return Desktop(backend="uia").windows(process=pid)
 
 
-def export_tft(app, main, pid: int, out_dir: Path, debug_dir: Path) -> None:
-    before = {w.handle for w in process_windows(pid)}
+def export_tft(app, main, pid: int, debug_dir: Path) -> None:
     main.set_focus()
     main.child_window(title="File", control_type="MenuItem").click_input()
     time.sleep(2)
@@ -126,25 +128,23 @@ def export_tft(app, main, pid: int, out_dir: Path, debug_dir: Path) -> None:
     items[0].click_input()
     time.sleep(3)
 
-    dialogs = [w for w in process_windows(pid) if w.handle not in before]
-    if not dialogs:
-        dialogs = [w for w in process_windows(pid) if w.handle != main.handle]
+    # The "TFT file output" dialog is hosted inside the main window. Its default
+    # folder is under %APPDATA%\Nextion Editor, which find_new_tft() searches.
     screenshot(debug_dir, "tft_output_dialog")
-    for win in dialogs:
-        print(f"output dialog: {win.window_text()!r}")
-        dlg = app.window(handle=win.handle)
-        dump_tree(dlg, debug_dir, f"output_dialog_{win.handle}")
-        edits = dlg.descendants(control_type="Edit")
-        print(f"edit fields: {[e.window_text() for e in edits]}")
-        if edits:
-            edits[0].set_edit_text(str(out_dir))
-        buttons = dlg.descendants(control_type="Button")
-        print(f"buttons: {[b.window_text() for b in buttons]}")
-        for b in buttons:
-            if b.window_text().strip().lower() in ("output", "ok", "export", "save"):
-                b.click_input()
-                print(f"clicked {b.window_text()!r}")
-                break
+    for _ in range(10):
+        buttons = [
+            b
+            for w in process_windows(pid)
+            for b in w.descendants(title="Output", control_type="Button")
+        ]
+        if buttons:
+            buttons[0].click_input()
+            print("clicked Output")
+            break
+        time.sleep(2)
+    else:
+        print("Output button not found, pressing Enter")
+        keyboard.send_keys("{ENTER}")
     time.sleep(3)
     screenshot(debug_dir, "tft_output_clicked")
 
@@ -170,20 +170,23 @@ def main() -> int:
     started = time.time()
     proc = subprocess.Popen([str(exe), str(hmi)], cwd=str(exe.parent))
     app = Application(backend="uia").connect(process=proc.pid, timeout=120)
-    main = app.top_window()
-    main.wait("visible", timeout=180)
-    print(f"editor window: {main.window_text()!r}")
     screenshot(debug_dir, "started")
 
-    # Give the project time to load, answering upgrade/info prompts meanwhile.
-    deadline = time.time() + 180
+    # Wait for the project window; the splash screen and loader windows come and go meanwhile.
+    main = None
+    deadline = time.time() + 300
     while time.time() < deadline:
-        main = app.top_window()
-        if hmi.stem.lower() in main.window_text().lower():
+        for win in process_windows(proc.pid):
+            if hmi.stem.lower() in win.window_text().lower():
+                main = app.window(handle=win.handle)
+                break
+        if main:
             break
-        if not dismiss_dialogs(proc.pid, None, debug_dir):
-            time.sleep(3)
-    main = app.window(handle=main.handle)
+        time.sleep(3)
+    if not main:
+        screenshot(debug_dir, "no_project_window")
+        print(f"windows: {[w.window_text() for w in process_windows(proc.pid)]}")
+        raise SystemExit("Project window did not appear")
     print(f"project window: {main.window_text()!r}")
     time.sleep(10)
     screenshot(debug_dir, "loaded")
@@ -198,7 +201,7 @@ def main() -> int:
     screenshot(debug_dir, "compiled")
 
     # Compile only checks the project; File > "TFT file output" writes the .tft.
-    export_tft(app, main, proc.pid, args.out_dir.resolve(), debug_dir)
+    export_tft(app, main, proc.pid, debug_dir)
 
     roots = [args.out_dir.resolve()] + search_roots(args.editor_dir, hmi)
     tft = None
