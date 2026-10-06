@@ -49,12 +49,26 @@ def bianyi_dirs(editor_dir: Path) -> list[Path]:
     return dirs
 
 
-def find_new_tft(editor_dir: Path, since: float) -> Path | None:
-    for d in bianyi_dirs(editor_dir):
-        if d.is_dir():
-            for f in d.glob("*.tft"):
-                if f.stat().st_mtime >= since and f.stat().st_size > 0:
-                    return f
+def search_roots(editor_dir: Path, hmi: Path) -> list[Path]:
+    roots = [editor_dir.resolve(), hmi.parent]
+    for env in ("USERPROFILE", "TEMP", "TMP", "PUBLIC", "ProgramData"):
+        if os.environ.get(env):
+            roots.append(Path(os.environ[env]))
+    return roots
+
+
+def find_new_tft(roots: list[Path], since: float) -> Path | None:
+    """The output folder differs between editor versions, so look everywhere likely."""
+    for root in roots:
+        for dirpath, dirnames, filenames in os.walk(root, onerror=lambda err: None):
+            for name in filenames:
+                if name.lower().endswith(".tft"):
+                    f = Path(dirpath) / name
+                    try:
+                        if f.stat().st_mtime >= since and f.stat().st_size > 0:
+                            return f
+                    except OSError:
+                        pass
     return None
 
 
@@ -67,7 +81,7 @@ def dismiss_dialogs(pid: int, main_handle: int | None, debug_dir: Path) -> bool:
         title = win.window_text()
         print(f"dialog: {title!r}")
         screenshot(debug_dir, f"dialog_{title[:20] or 'untitled'}")
-        dump_tree(win, debug_dir, f"dialog_{win.handle}")
+        dump_tree(Application(backend="uia").connect(handle=win.handle).window(handle=win.handle), debug_dir, f"dialog_{win.handle}")
         for label in DIALOG_BUTTONS:
             buttons = win.descendants(title=label, control_type="Button")
             if buttons:
@@ -136,10 +150,12 @@ def main() -> int:
         keyboard.send_keys("{F5}")
     compile_started = time.time()
 
+    roots = search_roots(args.editor_dir, hmi)
     tft = None
     while time.time() - started < args.timeout:
-        tft = find_new_tft(args.editor_dir, compile_started - 5)
+        tft = find_new_tft(roots, compile_started - 5)
         if tft:
+            print(f"found {tft}")
             # Wait until the editor has finished writing it.
             size = -1
             while size != tft.stat().st_size:
@@ -149,6 +165,8 @@ def main() -> int:
         dismiss_dialogs(proc.pid, main.handle, debug_dir)
         time.sleep(5)
     screenshot(debug_dir, "finished")
+    output = [c.window_text() for c in main.descendants() if "Compile" in c.window_text() and "Success" in c.window_text()]
+    print(f"compile output: {output}")
 
     proc.kill()
     if not tft:
