@@ -1,0 +1,103 @@
+---
+name: Build TFT
+
+on:
+  push:
+    paths:
+      - "hmi/dev/**"
+      - "hmi/*.HMI"
+      - "tools/nextion_*.py"
+      - "tools/render_button_backgrounds.py"
+      - ".github/workflows/build_tft.yml"
+  workflow_dispatch:
+    inputs:
+      variants:
+        description: "Space separated variants (empty = all)"
+        required: false
+        default: ""
+      editor_version:
+        description: "Nextion Editor version"
+        required: false
+        default: "1-68-2"
+
+permissions:
+  contents: read
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      variants: ${{ steps.list.outputs.variants }}
+    steps:
+      - id: list
+        env:
+          INPUT: ${{ github.event.inputs.variants }}
+        run: |
+          all="nspanel_eu nspanel_us nspanel_us_land nspanel_CJK_eu nspanel_CJK_us nspanel_CJK_us_land"
+          selected="${INPUT:-$all}"
+          echo "variants=$(printf '%s\n' $selected | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: matrix
+    runs-on: windows-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: ${{ fromJson(needs.matrix.outputs.variants) }}
+    env:
+      EDITOR_VERSION: ${{ github.event.inputs.editor_version || '1-68-2' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: pip install pywinauto pillow
+
+      - name: Sync .HMI from tracked sources
+        run: |
+          python tools/render_button_backgrounds.py --all
+          python tools/nextion_hmi_sync.py --variant ${{ matrix.variant }}
+
+      - name: Cache Nextion Editor
+        id: editor-cache
+        uses: actions/cache@v4
+        with:
+          path: nextion-editor
+          key: nextion-editor-${{ env.EDITOR_VERSION }}
+
+      - name: Download Nextion Editor
+        if: steps.editor-cache.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          Invoke-WebRequest "https://nextion.tech/download/nextion-setup-v$env:EDITOR_VERSION.zip" -OutFile editor.zip
+          Expand-Archive editor.zip -DestinationPath nextion-editor
+
+      - name: Compile TFT
+        run: >
+          python tools/nextion_compile_tft.py hmi/${{ matrix.variant }}.HMI
+          --editor-dir nextion-editor --out-dir out --debug-dir debug
+
+      - name: Upload TFT
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.variant }}.tft
+          path: out/${{ matrix.variant }}.tft
+
+      - name: Upload synced .HMI
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.variant }}.HMI
+          path: hmi/${{ matrix.variant }}.HMI
+
+      - name: Upload debug screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.variant }}-debug
+          path: debug/
