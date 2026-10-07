@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild the `alarm` page of nspanel_eu.HMI as a floor plan of tap areas.
+"""Rebuild the `alarm` page of the EU .HMI files as a floor plan of tap areas.
 
 The page keeps its name (so navigation and page ids stay valid) but its alarm
 components are replaced by one crop-image Text per area in
@@ -14,7 +14,7 @@ Touching an area sends `floorplan,toggle,<area>` and opening the page sends
 
 The page keeps its original object count (spare variables fill the gap) and its
 block is padded back to its original length (see nextion_hmi_sync.py),
-and hmi/dev/nspanel_eu_code/alarm.txt is rewritten to match, so the sync tool
+and hmi/dev/<variant>_code/alarm.txt is rewritten to match, so the sync tool
 leaves the page alone afterwards.
 """
 
@@ -30,9 +30,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import nextion_hmi_sync as hmi  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
-HMI = REPO / "hmi" / "nspanel_eu.HMI"
 LAYOUT = REPO / "hmi" / "dev" / "floorplan_eu.json"
-EXPORT = REPO / "hmi" / "dev" / "nspanel_eu_code" / "alarm.txt"
+VARIANTS = ("nspanel_eu", "nspanel_CJK_eu")  # both 480x320 and share hmi/dev/ui/eu/pics
 PAGE = "alarm"
 TEMPLATE_PAGE, TEMPLATE_OBJECT = "buttonpage01", "button01pic"
 TITLE = "Lys"
@@ -197,11 +196,10 @@ def export_text(objects: list) -> str:
     return "\n".join(out)
 
 
-def main() -> int:
-    layout = json.loads(LAYOUT.read_text())
-    if (layout["picture_off"], layout["picture_on"]) != (44, 45):
-        raise SystemExit("this page expects pictures 44 (off) and 45 (on)")
-    data = bytearray(HMI.read_bytes())
+def build_variant(variant: str, layout: dict) -> None:
+    hmi_path = REPO / "hmi" / f"{variant}.HMI"
+    export = REPO / "hmi" / "dev" / f"{variant}_code" / "alarm.txt"
+    data = bytearray(hmi_path.read_bytes())
     pages = read_pages(data)
     entry, original, header, alarm_objects = pages[PAGE]
     templates = {
@@ -209,9 +207,6 @@ def main() -> int:
         "timer": find_object(pages, TEMPLATE_PAGE, "click_timer"),
         "spare": find_object(pages, PAGE, "lastclick"),  # a plain variable, no code
     }
-    if any(hmi.object_name(items, PAGE) == layout["areas"][0]["name"] for items in alarm_objects):
-        print("alarm page already holds the floor plan; rebuilding it")
-
     for title in (True, False):
         objects = build_objects(alarm_objects, templates, layout["areas"], title)
         try:
@@ -220,15 +215,23 @@ def main() -> int:
         except RuntimeError as exc:
             if not title:
                 raise
-            print(f"without the title: {exc}")
+            print(f"{variant}: without the title: {exc}")
     block = hmi.build_page_block(PAGE, header, objects)
     if len(block) != entry.size:
-        raise SystemExit(f"page size {len(block)} != {entry.size}")
+        raise SystemExit(f"{variant}: page size {len(block)} != {entry.size}")
     hmi.reseal(block, original)
     data[entry.off : entry.off + entry.size] = block
-    HMI.write_bytes(data)
-    EXPORT.write_text(export_text(objects), encoding="utf-8")
-    print(f"{HMI.name}: {PAGE} rebuilt with {len(layout['areas'])} areas ({len(objects)} objects, {entry.size} bytes)")
+    hmi_path.write_bytes(data)
+    export.write_text(export_text(objects), encoding="utf-8")
+    print(f"{hmi_path.name}: {PAGE} rebuilt with {len(layout['areas'])} areas ({len(objects)} objects, {entry.size} bytes)")
+
+
+def main() -> int:
+    layout = json.loads(LAYOUT.read_text())
+    if (layout["picture_off"], layout["picture_on"]) != (44, 45):
+        raise SystemExit("this page expects pictures 44 (off) and 45 (on)")
+    for variant in VARIANTS:
+        build_variant(variant, layout)
     return 0
 
 

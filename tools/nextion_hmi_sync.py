@@ -77,7 +77,8 @@ PAD_EVENT = "codesunload"
 PAD_PREFIX = b"//hmi_sync pad"
 
 # Pictures: "<n>.is" holds the imported PNG, "<n>.i" the converted RGB565 data used for the TFT.
-# Tracked replacements live in hmi/dev/<variant>_pictures/<picture id>.png.
+# Tracked pictures live in hmi/dev/ui/<model>/pics/<picture id>.png (or .jpg), shared by the
+# variants with the same screen; only pictures that look different from the .HMI are replaced.
 PICTURE_MAGIC = b"\x0a\x64\x01\x03"
 PICTURE_SOURCE_MAGIC = b"\x0a\x64\x01\x01"
 PICTURE_HEADER = 24
@@ -622,19 +623,42 @@ def relocate_block(data: bytearray, name: str, block: bytes) -> None:
     raise RuntimeError(f"resource {name} not found in the .HMI directory")
 
 
+PICTURE_MODELS = {  # variant -> hmi/dev/ui/<model>/pics
+    "nspanel_eu": "eu", "nspanel_CJK_eu": "eu",
+    "nspanel_us": "us", "nspanel_CJK_us": "us",
+    "nspanel_us_land": "us_land", "nspanel_CJK_us_land": "us_land",
+}
+PICTURE_FILE_RE = re.compile(r"^(\d+)\.(png|jpg)$", re.IGNORECASE)
+
+
+def picture_dir(variant: str) -> Path:
+    return REPO_ROOT / "hmi" / "dev" / "ui" / PICTURE_MODELS[variant] / "pics"
+
+
+def same_pixels(a: bytes, b: bytes) -> bool:
+    from PIL import Image, ImageChops
+    import io
+
+    first, second = (Image.open(io.BytesIO(x)).convert("RGB") for x in (a, b))
+    return first.size == second.size and ImageChops.difference(first, second).getbbox() is None
+
+
 def sync_pictures(variant: str, data: bytearray, details: List[str], check_only: bool) -> int:
-    picture_dir = VARIANTS[variant][1].parent / f"{variant}_pictures"
-    if not picture_dir.is_dir():
+    folder = picture_dir(variant)
+    if not folder.is_dir():
         return 0
     names = picture_names(data)
     sources = picture_sources(data)
     changed = 0
-    for path in sorted(picture_dir.glob("*.png")):
-        picture_id = int(path.stem)
+    for path in sorted(folder.iterdir()):
+        match = PICTURE_FILE_RE.match(path.name)
+        if not match:
+            continue
+        picture_id = int(match.group(1))
         if picture_id >= len(names):
             raise RuntimeError(f"{path.name}: picture {picture_id} does not exist in {variant}")
         png = path.read_bytes()
-        if sources.get(picture_id) == png:
+        if picture_id in sources and (sources[picture_id] == png or same_pixels(sources[picture_id], png)):
             continue
         if not check_only:
             source, picture = build_picture_blocks(png)

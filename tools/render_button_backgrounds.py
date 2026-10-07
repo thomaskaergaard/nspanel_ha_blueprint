@@ -5,7 +5,7 @@ ESPHome shows a button by cropping picture 46 (off) or 47 (on) behind the button
 components, so those pictures must contain a rounded rectangle exactly where each
 ``buttonNNpic`` component sits. This script redraws both pictures on top of the
 page background (picture 0) using the layout in ``hmi/dev/<variant>_code/buttonpage01.txt``
-and writes them to ``hmi/dev/<variant>_pictures/<picture id>.png``.
+and writes them to ``hmi/dev/ui/<model>/pics/<picture id>.png``.
 Run ``nextion_hmi_sync.py`` afterwards to store them in the .HMI files.
 
 Requires Pillow.
@@ -21,7 +21,7 @@ from typing import Iterable, List, Tuple
 
 from PIL import Image, ImageChops, ImageDraw
 
-from nextion_hmi_sync import REPO_ROOT, VARIANTS, parse_source_layouts, picture_sources
+from nextion_hmi_sync import REPO_ROOT, VARIANTS, parse_source_layouts, picture_dir, picture_sources
 
 BUTTON_PAGES = [f"buttonpage{index:02d}" for index in range(1, 9)]
 BUTTON_COUNT = 10
@@ -38,7 +38,7 @@ SUPERSAMPLE = 4
 
 
 def pictures_dir(variant: str) -> Path:
-    return REPO_ROOT / "hmi" / "dev" / f"{variant}_pictures"
+    return picture_dir(variant)
 
 
 def button_boxes(variant: str) -> List[Tuple[int, int, int, int]]:

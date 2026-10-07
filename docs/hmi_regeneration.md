@@ -84,7 +84,7 @@ It also synchronizes the **event code** of existing objects (Preinitialize, Post
 
 ## Pictures
 
-PNG files in `hmi/dev/<variant>_pictures/<picture id>.png` replace the picture with that id. For each changed picture, the tool writes the PNG (`.is`) and an uncompressed RGB565 copy (`.i`, the data compiled into the TFT). It appends both at the end of the `.HMI` and marks the old entries stale, the same way Nextion Editor does. The file grows by about 300 KB for each 480×320 picture you change. Pillow is required for this step (`pip install pillow`).
+Pictures live in `hmi/dev/ui/<model>/pics/<picture id>.png` (or `.jpg`): `eu` for `nspanel_eu` and `nspanel_CJK_eu`, `us` for the two US portrait variants, `us_land` for the two US landscape ones. A file replaces the picture with that id only when its pixels differ from the picture in the `.HMI`, so the full set of upstream source art can stay in the folder. For each changed picture, the tool writes the PNG (`.is`) and an uncompressed RGB565 copy (`.i`, the data compiled into the TFT). It appends both at the end of the `.HMI` and marks the old entries stale, the same way Nextion Editor does. The file grows by about 300 KB for each 480×320 picture you change. Pillow is required for this step (`pip install pillow`).
 
 ### Button page backgrounds
 
@@ -142,12 +142,13 @@ Then open these updated files in Nextion Editor and compile:
 
 `tools/build_floorplan_page.py` turns the `alarm` page of `nspanel_eu.HMI` into a floor plan. The
 tap areas come from `hmi/dev/floorplan_eu.json`, and pictures 44 (lights off) and 45 (all lit) from
-`hmi/dev/nspanel_eu_pictures/`. Those three files are generated from the 3D renders by the
+`hmi/dev/ui/eu/pics/`. The tool rebuilds the page in both `nspanel_eu` and `nspanel_CJK_eu`, which share those pictures. Those three files are generated from the 3D renders by the
 Plantegning project (`floorplan/nspanel.py`). After regenerating them:
 
 ```bash
 python tools/build_floorplan_page.py      # rebuilds the alarm page and alarm.txt
 python tools/nextion_hmi_sync.py --variant nspanel_eu
+python tools/nextion_hmi_sync.py --variant nspanel_CJK_eu
 ```
 
 Each area is a global crop-image Text, so Home Assistant can light it from any page with
