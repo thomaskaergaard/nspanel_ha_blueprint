@@ -491,6 +491,7 @@ select:
       - entitypage02
       - entitypage03
       - entitypage04
+      - floorplan  # EU TFT only (page 34)
       - home
       - qrcode
       - utilities
