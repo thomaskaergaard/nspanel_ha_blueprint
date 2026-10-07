@@ -55,7 +55,8 @@ namespace nspanel_ha_blueprint {
         "buttonpage05",
         "buttonpage06",
         "buttonpage07",
-        "buttonpage08"
+        "buttonpage08",
+        "floorplan"  // EU only (hmi/dev/floorplan_eu.json); other TFTs have 34 pages
     };
 
     constexpr size_t PAGE_COUNT = sizeof(page_names) / sizeof(page_names[0]);

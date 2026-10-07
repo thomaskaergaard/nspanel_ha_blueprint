@@ -84,7 +84,7 @@ It also synchronizes the **event code** of existing objects (Preinitialize, Post
 
 ## Pictures
 
-Pictures live in `hmi/dev/ui/<model>/pics/<picture id>.png` (or `.jpg`): `eu` for `nspanel_eu` and `nspanel_CJK_eu`, `us` for the two US portrait variants, `us_land` for the two US landscape ones. A file replaces the picture with that id only when its pixels differ from the picture in the `.HMI`, so the full set of upstream source art can stay in the folder. For each changed picture, the tool writes the PNG (`.is`) and an uncompressed RGB565 copy (`.i`, the data compiled into the TFT). It appends both at the end of the `.HMI` and marks the old entries stale, the same way Nextion Editor does. The file grows by about 300 KB for each 480×320 picture you change. Pillow is required for this step (`pip install pillow`).
+Pictures live in `hmi/dev/ui/<model>/pics/<picture id>.png` (or `.jpg`): `eu` for `nspanel_eu` and `nspanel_CJK_eu`, `us` for the two US portrait variants, `us_land` for the two US landscape ones. The sync tool compares their pixels with the pictures in the `.HMI` and lists the ones that differ; importing them needs Nextion Editor (see "Structural changes need Nextion Editor").
 
 ### Button page backgrounds
 
@@ -138,22 +138,39 @@ Then open these updated files in Nextion Editor and compile:
 - `/home/runner/work/nspanel_ha_blueprint/nspanel_ha_blueprint/hmi/nspanel_eu.HMI`
 - `/home/runner/work/nspanel_ha_blueprint/nspanel_ha_blueprint/hmi/nspanel_CJK_eu.HMI`
 
+## Structural changes need Nextion Editor
+
+An `.HMI` holds two copies of its resource directory. Nextion Editor reads the copy at offset
+`0x80000`, which ends with a checksum the repo tools can't compute. So the tools can only change
+blocks in place (same offset, same size). Adding a page, adding a picture or replacing one has to
+go through the editor. The **Edit HMI structure** workflow (Actions → Run workflow) drives the
+editor on a Windows runner (`tools/nextion_editor_structure.py`) and commits the saved `.HMI`:
+
+- `copy_page`: copy a page to the end of the page list. The copy keeps the original's size and
+  object count, so the tools can then rewrite its content in place.
+- `add_pictures`: import PNGs as new pictures (next free ids).
+
+`nextion_hmi_sync.py` reports pictures in `hmi/dev/ui/<model>/pics` that differ from the `.HMI`,
+but doesn't write them.
+
 ## Floor plan page (EU)
 
-`tools/build_floorplan_page.py` turns the `alarm` page of `nspanel_eu.HMI` into a floor plan. The
-tap areas come from `hmi/dev/floorplan_eu.json`, and pictures 44 (lights off) and 45 (all lit) from
-`hmi/dev/ui/eu/pics/`. The tool rebuilds the page in both `nspanel_eu` and `nspanel_CJK_eu`, which share those pictures. Those three files are generated from the 3D renders by the
-Plantegning project (`floorplan/nspanel.py`). After regenerating them:
+`tools/build_floorplan_page.py` fills page 34, `floorplan`, of `nspanel_eu.HMI`. Nextion Editor created it as a copy of
+the alarm page, and imported pictures 48 (lights off) and 49 (all lit) from `hmi/dev/ui/eu/pics/`.
+The tap areas come from `hmi/dev/floorplan_eu.json`. Those three files are generated from the 3D
+renders by the Plantegning project (`floorplan/nspanel.py`). After regenerating them:
 
 ```bash
-python tools/build_floorplan_page.py      # rebuilds the alarm page and alarm.txt
+python tools/build_floorplan_page.py      # rebuilds the floorplan page and floorplan.txt
 python tools/nextion_hmi_sync.py --variant nspanel_eu
-python tools/nextion_hmi_sync.py --variant nspanel_CJK_eu
 ```
 
+New pictures 48/49 must be re-imported with the editor (see above).
+
 Each area is a global crop-image Text, so Home Assistant can light it from any page with
-`alarm.<area>.picc=45` (44 = dark). A tap sends `floorplan,toggle,<area>` and opening the page
-sends `floorplan,opened`, both as `esphome.nspanel_ha_blueprint` events.
+`floorplan.<area>.picc=49` (48 = dark). A tap sends `floorplan,toggle,<area>` and opening the page
+sends `floorplan,opened`, both as `esphome.nspanel_ha_blueprint` events. The page is number 34, so
+`components/nspanel_ha_blueprint/pages.h` lists it last.
 
 Rules learned while rebuilding a page:
 

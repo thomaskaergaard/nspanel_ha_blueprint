@@ -78,13 +78,9 @@ PAD_PREFIX = b"//hmi_sync pad"
 
 # Pictures: "<n>.is" holds the imported PNG, "<n>.i" the converted RGB565 data used for the TFT.
 # Tracked pictures live in hmi/dev/ui/<model>/pics/<picture id>.png (or .jpg), shared by the
-# variants with the same screen; only pictures that look different from the .HMI are replaced.
-PICTURE_MAGIC = b"\x0a\x64\x01\x03"
+# variants with the same screen. Pictures that look different from the .HMI are reported;
+# importing them needs Nextion Editor (tools/nextion_editor_structure.py).
 PICTURE_SOURCE_MAGIC = b"\x0a\x64\x01\x01"
-PICTURE_HEADER = 24
-PICTURE_SOURCE_HEADER = 27
-PICTURE_RAW_DATA_HEADER = 20  # mode 0 (uncompressed) + zero padding before the pixels
-DIRECTORY_ENTRY = 28
 
 
 def _build_crc_table() -> List[int]:
@@ -181,6 +177,14 @@ def reseal(block: bytearray, original: bytes) -> None:
     constant = ensure_stamp_constant(original)
     struct.pack_into("<I", block, 0, 0)
     struct.pack_into("<I", block, 0, (block_core(block) ^ constant) & 0xFFFFFFFF)
+
+
+EDITOR_DIRECTORY = 0x80000  # the checksummed directory copy Nextion Editor reads
+
+
+def editor_directory(buf: bytes) -> List[DirectoryEntry]:
+    """Resource directory as Nextion Editor sees it (the copy at 0x80000)."""
+    return read_directory(buf[EDITOR_DIRECTORY:])
 
 
 def read_directory(buf: bytes) -> List[DirectoryEntry]:
@@ -545,7 +549,7 @@ def _balance_length(page_name: str, header: bytes, objects: list, target: int) -
 
 
 def live_entries(data: bytes) -> Dict[str, DirectoryEntry]:
-    return {entry.name: entry for entry in read_directory(data) if not entry.stale}
+    return {entry.name: entry for entry in editor_directory(data) if entry.name and not entry.stale}
 
 
 def picture_names(data: bytes) -> List[str]:
@@ -575,52 +579,6 @@ def picture_sources(data: bytes) -> Dict[int, bytes]:
         if block[:4] == PICTURE_SOURCE_MAGIC:
             sources[picture_id] = bytes(block[read_u32(block, 8) :])
     return sources
-
-
-def build_picture_blocks(png: bytes):
-    """Return (.is block, .i block) for a PNG; the .i data is stored uncompressed (mode 0)."""
-    try:
-        from PIL import Image
-    except ImportError as exc:
-        raise RuntimeError("Pillow is required to write pictures (pip install pillow)") from exc
-    import io
-
-    image = Image.open(io.BytesIO(png)).convert("RGB")
-    width, height = image.size
-    size = struct.pack("<HH", width, height)
-    source = PICTURE_SOURCE_MAGIC + struct.pack("<II", 0, PICTURE_SOURCE_HEADER) + size
-    source += struct.pack("<II", len(png), 0) + b"png" + png
-
-    rgb = image.tobytes()
-    pixels = bytearray()
-    for i in range(0, len(rgb), 3):
-        r, g, b = rgb[i], rgb[i + 1], rgb[i + 2]
-        pixels += struct.pack("<H", ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3))
-    payload = bytes(PICTURE_RAW_DATA_HEADER) + bytes(pixels)
-    picture = PICTURE_MAGIC + struct.pack("<II", 0, PICTURE_HEADER) + size + struct.pack("<II", len(payload), 0) + payload
-    return source, picture
-
-
-def relocate_block(data: bytearray, name: str, block: bytes) -> None:
-    """Append `block` as the new content of resource `name`, marking the old entry stale (as Nextion Editor does)."""
-    count = read_u32(data, 0)
-    first_block = min(entry.off for entry in read_directory(data) if entry.size)
-    if 4 + (count + 1) * DIRECTORY_ENTRY > first_block:
-        raise RuntimeError(f"no room left in the .HMI directory for {name}")
-    for index in range(count):
-        off = 4 + index * DIRECTORY_ENTRY
-        entry_name = data[off : off + 16].split(b"\0", 1)[0].decode("latin1")
-        flags = read_u32(data, off + 24)
-        if entry_name == name and not flags & 1:
-            data[off : off + 16] = bytes(16)
-            struct.pack_into("<I", data, off + 24, flags | 1)
-            new_off = 4 + count * DIRECTORY_ENTRY
-            data[new_off : new_off + 16] = name.encode("latin1").ljust(16, b"\0")
-            struct.pack_into("<III", data, new_off + 16, len(data), len(block), flags & ~1)
-            struct.pack_into("<I", data, 0, count + 1)
-            data.extend(block)
-            return
-    raise RuntimeError(f"resource {name} not found in the .HMI directory")
 
 
 PICTURE_MODELS = {  # variant -> hmi/dev/ui/<model>/pics
@@ -656,15 +614,16 @@ def sync_pictures(variant: str, data: bytearray, details: List[str], check_only:
             continue
         picture_id = int(match.group(1))
         if picture_id >= len(names):
-            raise RuntimeError(f"{path.name}: picture {picture_id} does not exist in {variant}")
+            # Shared folder: e.g. the floor plan pictures exist in nspanel_eu only.
+            details.append(f"  picture {picture_id} ({path.name}) is not in {variant}; skipped")
+            continue
         png = path.read_bytes()
         if picture_id in sources and (sources[picture_id] == png or same_pixels(sources[picture_id], png)):
             continue
-        if not check_only:
-            source, picture = build_picture_blocks(png)
-            relocate_block(data, names[picture_id] + ".is", source)
-            relocate_block(data, names[picture_id] + ".i", picture)
-        details.append(f"  picture {picture_id}: {path.relative_to(REPO_ROOT)}")
+        # Nextion Editor reads a checksummed copy of the resource directory that this tool can't
+        # write, so a picture can only be replaced through the editor
+        # (tools/nextion_editor_structure.py --replace-picture).
+        details.append(f"  picture {picture_id} differs from {path.relative_to(REPO_ROOT)}: import it with the editor")
         changed += 1
     return changed
 
@@ -679,7 +638,7 @@ def sync_variant(variant: str, check_only: bool, verbose: bool = False) -> str:
     changed_events = 0
     details: List[str] = []
 
-    for entry in read_directory(data):
+    for entry in editor_directory(data):
         if entry.stale or not entry.name.endswith(".pa"):
             continue
         if entry.off + entry.size > len(data):
@@ -722,7 +681,7 @@ def sync_variant(variant: str, check_only: bool, verbose: bool = False) -> str:
     except RuntimeError as exc:
         raise RuntimeError(f"{hmi_path.name}:{exc}") from exc
 
-    if not check_only and (changed_pages or changed_pictures):
+    if not check_only and changed_pages:
         hmi_path.write_bytes(data)
 
     mode = "check" if check_only else "sync"

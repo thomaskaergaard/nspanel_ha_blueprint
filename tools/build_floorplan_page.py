@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Rebuild the `alarm` page of the EU .HMI files as a floor plan of tap areas.
+"""Build the `floorplan` page of nspanel_eu.HMI: one tap area per room.
 
-The page keeps its name (so navigation and page ids stay valid) but its alarm
-components are replaced by one crop-image Text per area in
-hmi/dev/floorplan_eu.json. Picture 44 is the page background (lights off) and
-picture 45 the same plan with every area lit; an area shows as lit when its
-component's `picc` is 45. The components are global, so Home Assistant can set
-them with `alarm.<area>.picc=45` while another page is shown.
+Nextion Editor adds the page (tools/nextion_editor_structure.py copies the alarm
+page to the end of the page list, so it arrives as `page0`) and imports the two
+pictures; this tool then fills the copy in place: one crop-image Text per area in
+hmi/dev/floorplan_eu.json. Picture 48 is the page background (lights off) and
+picture 49 the same plan with every area lit; an area shows as lit when its
+component's `picc` is 49. The components are global, so Home Assistant can set
+them with `floorplan.<area>.picc=49` while another page is shown.
 
 Touching an area sends `floorplan,toggle,<area>` and opening the page sends
 `floorplan,opened`; ESPHome forwards both to Home Assistant as
@@ -14,7 +15,7 @@ Touching an area sends `floorplan,toggle,<area>` and opening the page sends
 
 The page keeps its original object count (spare variables fill the gap) and its
 block is padded back to its original length (see nextion_hmi_sync.py),
-and hmi/dev/<variant>_code/alarm.txt is rewritten to match, so the sync tool
+and hmi/dev/<variant>_code/floorplan.txt is rewritten to match, so the sync tool
 leaves the page alone afterwards.
 """
 
@@ -31,8 +32,10 @@ import nextion_hmi_sync as hmi  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
 LAYOUT = REPO / "hmi" / "dev" / "floorplan_eu.json"
-VARIANTS = ("nspanel_eu", "nspanel_CJK_eu")  # both 480x320 and share hmi/dev/ui/eu/pics
-PAGE = "alarm"
+VARIANTS = ("nspanel_eu",)
+SOURCE_PAGES = ("floorplan", "page0")  # rebuilt before / fresh copy from Nextion Editor
+PAGE = "floorplan"
+OFF, ON = 48, 49
 TEMPLATE_PAGE, TEMPLATE_OBJECT = "buttonpage01", "button01pic"
 TITLE = "Lys"
 
@@ -93,7 +96,7 @@ def set_events(items: list, events: dict) -> None:
 
 def read_pages(data: bytes) -> dict:
     pages = {}
-    for entry in hmi.read_directory(data):
+    for entry in hmi.editor_directory(data):
         if entry.stale or not entry.name.endswith(".pa"):
             continue
         block = bytes(data[entry.off : entry.off + entry.size])
@@ -106,13 +109,14 @@ def find_object(pages: dict, page: str, name: str) -> list:
     return next(items for items in pages[page][3] if hmi.object_name(items, page) == name)
 
 
-def build_objects(alarm_objects: list, templates: dict, areas: list, title: bool = True) -> list:
-    by_name = {hmi.object_name(items, PAGE): items for items in alarm_objects}
+def build_objects(source: str, alarm_objects: list, templates: dict, areas: list, title: bool = True) -> list:
+    by_name = {hmi.object_name(items, source): items for items in alarm_objects}
     template = templates["area"]
 
-    page = copy.deepcopy(by_name[PAGE])
+    page = copy.deepcopy(by_name[source])
+    set_attr(page, "objname", PAGE)
     set_attr(page, "sta", 2)  # background: picture
-    set_attr(page, "pic", 44)
+    set_attr(page, "pic", OFF)
     set_events(page, {"codesload": page_load(title), "codesloadend": [], "codesdown": [], "codesup": [], "codesunload": []})
 
     timer = copy.deepcopy(templates["timer"])
@@ -138,7 +142,7 @@ def build_objects(alarm_objects: list, templates: dict, areas: list, title: bool
         items = copy.deepcopy(template)
         set_attr(items, "objname", area["name"])
         set_attr(items, "vscope", 1)  # global: settable from other pages
-        set_attr(items, "picc", 44)
+        set_attr(items, "picc", OFF)
         set_geometry(items, area["x"], area["y"], area["w"], area["h"])
         set_events(items, {"codesdown": [], "codesup": queue_event(f"floorplan,toggle,{area['name']}")})
         objects.append(items)
@@ -198,17 +202,20 @@ def export_text(objects: list) -> str:
 
 def build_variant(variant: str, layout: dict) -> None:
     hmi_path = REPO / "hmi" / f"{variant}.HMI"
-    export = REPO / "hmi" / "dev" / f"{variant}_code" / "alarm.txt"
+    export = REPO / "hmi" / "dev" / f"{variant}_code" / f"{PAGE}.txt"
     data = bytearray(hmi_path.read_bytes())
     pages = read_pages(data)
-    entry, original, header, alarm_objects = pages[PAGE]
+    source = next((name for name in SOURCE_PAGES if name in pages), None)
+    if source is None:
+        raise SystemExit(f"{variant}: no page {' or '.join(SOURCE_PAGES)}; add it with tools/nextion_editor_structure.py")
+    entry, original, header, alarm_objects = pages[source]
     templates = {
         "area": find_object(pages, TEMPLATE_PAGE, TEMPLATE_OBJECT),
         "timer": find_object(pages, TEMPLATE_PAGE, "click_timer"),
-        "spare": find_object(pages, PAGE, "lastclick"),  # a plain variable, no code
+        "spare": find_object(pages, source, "lastclick"),  # a plain variable, no code
     }
     for title in (True, False):
-        objects = build_objects(alarm_objects, templates, layout["areas"], title)
+        objects = build_objects(source, alarm_objects, templates, layout["areas"], title)
         try:
             hmi.balance_length(PAGE, header, objects, entry.size)
             break
@@ -228,8 +235,8 @@ def build_variant(variant: str, layout: dict) -> None:
 
 def main() -> int:
     layout = json.loads(LAYOUT.read_text())
-    if (layout["picture_off"], layout["picture_on"]) != (44, 45):
-        raise SystemExit("this page expects pictures 44 (off) and 45 (on)")
+    if (layout["picture_off"], layout["picture_on"]) != (OFF, ON):
+        raise SystemExit(f"this page expects pictures {OFF} (off) and {ON} (on)")
     for variant in VARIANTS:
         build_variant(variant, layout)
     return 0

@@ -2,384 +2,781 @@ Page alarm
     Attributes
         ID                 : 0
         Scope              : local
-        x coordinate       : 0
-        y coordinate       : 0
+        Dragging           : 0
+        Send Component ID  : on press and release
+        Opacity            : 127
         Width              : 480
-        Height             : 320
-
+        Effect             : load
+        Effect Priority    : 0
+        Effect Time        : 300
+        Locked             : no
+        Swide up page ID   : disabled
+        Swide down page ID : disabled
+        Swide left page ID : disabled
+        Swide right page ID: disabled
+        Fill               : solid color
+        Back. Color        : 0
+    
     Events
         Preinitialize Event
             dim=brightness
             if(api==0)
             {
                 page home_page_id
+            }else
+            {
+                vis bt_home,0
+                vis bt_away,0
+                vis bt_night,0
+                vis bt_vacat,0
+                vis bt_bypass,0
             }
-            page_label.txt="Lys"
-            lastclick.txt="floorplan,opened"
-            send_tm.en=1
             sendme
-
-
+        
 Variable (string) lastclick
     Attributes
-        ID                 : 1
-        Scope              : local
-
-Timer send_tm
+        ID            : 3
+        Scope         : local
+        Text          : 
+        Max. Text Size: 255
+    
+Variable (string) code_format
     Attributes
-        ID                 : 2
-        Scope              : local
-
+        ID            : 28
+        Scope         : local
+        Text          : 
+        Max. Text Size: 15
+    
+Variable (string) code_arm_req
+    Attributes
+        ID            : 29
+        Scope         : local
+        Text          : 
+        Max. Text Size: 1
+    
+Text page_label
+    Attributes
+        ID                  : 1
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : on press and release
+        Opacity             : 127
+        x coordinate        : 48
+        y coordinate        : 8
+        Width               : 300
+        Height              : 30
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 2
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: left
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : Alarm Control Panel
+        Max. Text Size      : 100
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text icon_state
+    Attributes
+        ID                  : 2
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : on press and release
+        Opacity             : 127
+        x coordinate        : 12
+        y coordinate        : 8
+        Width               : 35
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 8
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : \xee\x92\x97
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_home_text
+    Attributes
+        ID                  : 5
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 49
+        y coordinate        : 116
+        Width               : 82
+        Height              : 40
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : bottom
+        Input Type          : character
+        Text                : Home
+        Max. Text Size      : 22
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_away_text
+    Attributes
+        ID                  : 7
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 184
+        y coordinate        : 116
+        Width               : 82
+        Height              : 40
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : bottom
+        Input Type          : character
+        Text                : Away
+        Max. Text Size      : 22
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_night_text
+    Attributes
+        ID                  : 9
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 319
+        y coordinate        : 116
+        Width               : 82
+        Height              : 40
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : bottom
+        Input Type          : character
+        Text                : Night
+        Max. Text Size      : 22
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_vacat_text
+    Attributes
+        ID                  : 11
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 49
+        y coordinate        : 246
+        Width               : 82
+        Height              : 40
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : bottom
+        Input Type          : character
+        Text                : Vacation
+        Max. Text Size      : 22
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_bypass_text
+    Attributes
+        ID                  : 13
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 184
+        y coordinate        : 246
+        Width               : 82
+        Height              : 40
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : bottom
+        Input Type          : character
+        Text                : Bypass
+        Max. Text Size      : 22
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_disarm_text
+    Attributes
+        ID                  : 15
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 319
+        y coordinate        : 246
+        Width               : 82
+        Height              : 40
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : bottom
+        Input Type          : character
+        Text                : Disarm
+        Max. Text Size      : 22
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_home_icon
+    Attributes
+        ID                  : 16
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 46
+        y coordinate        : 75
+        Width               : 35
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 8
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : \xee\x9a\x89
+        Max. Text Size      : 3
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_away_icon
+    Attributes
+        ID                  : 17
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 181
+        y coordinate        : 75
+        Width               : 35
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 8
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : \xee\xa6\x9c
+        Max. Text Size      : 3
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_night_icon
+    Attributes
+        ID                  : 18
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 316
+        y coordinate        : 75
+        Width               : 35
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 8
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : \xef\xa0\xa7
+        Max. Text Size      : 3
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_vacat_icon
+    Attributes
+        ID                  : 19
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 46
+        y coordinate        : 206
+        Width               : 35
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 8
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : \xee\x9a\xba
+        Max. Text Size      : 3
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_bypass_icon
+    Attributes
+        ID                  : 20
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 181
+        y coordinate        : 206
+        Width               : 35
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 8
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : \xee\x9d\xbf
+        Max. Text Size      : 3
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Text bt_disarm_icon
+    Attributes
+        ID                  : 21
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 316
+        y coordinate        : 206
+        Width               : 35
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 8
+        Back. Color         : 6339
+        Font Color          : 10597
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : \xee\xa6\x9d
+        Max. Text Size      : 3
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
+    
+Picture bt_home_pic
+    Attributes
+        ID               : 4
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 40
+        y coordinate     : 65
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+        Picture ID       : 45
+    
+Picture bt_away_pic
+    Attributes
+        ID               : 6
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 175
+        y coordinate     : 65
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+        Picture ID       : 45
+    
+Picture bt_night_pic
+    Attributes
+        ID               : 8
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 310
+        y coordinate     : 65
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+        Picture ID       : 45
+    
+Picture bt_vacat_pic
+    Attributes
+        ID               : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 40
+        y coordinate     : 196
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+        Picture ID       : 45
+    
+Picture bt_bypass_pic
+    Attributes
+        ID               : 12
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 175
+        y coordinate     : 196
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+        Picture ID       : 45
+    
+Picture bt_disarm_pic
+    Attributes
+        ID               : 14
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 310
+        y coordinate     : 196
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+        Picture ID       : 45
+    
+Button button_back
+    Attributes
+        ID                                  : 30
+        Scope                               : local
+        Dragging                            : 0
+        Send Component ID                   : on press and release
+        Opacity                             : 127
+        x coordinate                        : 385
+        y coordinate                        : 0
+        Width                               : 95
+        Height                              : 40
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : crop image
+        Font ID                             : 8
+        Cropped Back. Picture ID (Unpressed): 0
+        Back. Picture ID (Pressed)          : 65535
+        Cropped Back. Picture ID (Pressed)  : 0
+        Horizontal Alignment                : center
+        Vertical Alignment                  : top
+        State                               : unpressed
+        Text                                : \xee\x85\x98
+        Max. Text Size                      : 3
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
     Events
-        Timer Event
-            send_tm.en=0
+        Touch Press Event
+            page back_page_id
+        
+Hotspot bt_home
+    Attributes
+        ID               : 22
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: on press and release
+        Opacity          : 127
+        x coordinate     : 40
+        y coordinate     : 65
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+    
+    Events
+        Touch Press Event
+            bt_home_pic.pic=44
+            bt_home_text.bco=65024
+            bt_home_text.pco=0
+            bt_home_icon.bco=65024
+            bt_home_icon.pco=0
+        
+        Touch Release Event
+            lastclick.txt="alarm,home,"+code_format.txt+","+code_arm_req.txt+","+bt_home_text.txt
             printh 92
             prints "localevent",0
             printh 00
             prints lastclick.txt,0
             printh 00
             printh FF FF FF
-
-
-Text page_label
+        
+Hotspot bt_away
     Attributes
-        ID                 : 3
-        Scope              : local
-        x coordinate       : 368
-        y coordinate       : 48
-        Width              : 108
-        Height             : 32
-
-Text badevaerelse
-    Attributes
-        ID                 : 4
-        Scope              : global
-        x coordinate       : 275
-        y coordinate       : 38
-        Width              : 52
-        Height             : 51
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,badevaerelse"
-            send_tm.en=1
-
-
-Text sovevaerelse
-    Attributes
-        ID                 : 5
-        Scope              : global
-        x coordinate       : 275
-        y coordinate       : 89
-        Width              : 52
-        Height             : 63
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,sovevaerelse"
-            send_tm.en=1
-
-
-Text walk_in
-    Attributes
-        ID                 : 6
-        Scope              : global
-        x coordinate       : 297
-        y coordinate       : 152
-        Width              : 30
-        Height             : 42
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,walk_in"
-            send_tm.en=1
-
-
-Text lille_bad
-    Attributes
-        ID                 : 7
-        Scope              : global
-        x coordinate       : 297
-        y coordinate       : 194
-        Width              : 30
-        Height             : 42
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,lille_bad"
-            send_tm.en=1
-
-
-Text bryggers
-    Attributes
-        ID                 : 8
-        Scope              : global
-        x coordinate       : 275
-        y coordinate       : 236
-        Width              : 52
-        Height             : 45
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,bryggers"
-            send_tm.en=1
-
-
-Text gang
-    Attributes
-        ID                 : 9
-        Scope              : global
-        x coordinate       : 275
-        y coordinate       : 152
-        Width              : 22
-        Height             : 84
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,gang"
-            send_tm.en=1
-
-
-Text kokken_a
-    Attributes
-        ID                 : 10
-        Scope              : global
-        x coordinate       : 236
-        y coordinate       : 38
-        Width              : 39
-        Height             : 140
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,kokken_a"
-            send_tm.en=1
-
-
-Text kokken_b
-    Attributes
-        ID                 : 11
-        Scope              : global
-        x coordinate       : 208
-        y coordinate       : 38
-        Width              : 28
-        Height             : 61
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,kokken_b"
-            send_tm.en=1
-
-
-Text vaerelse_1
-    Attributes
-        ID                 : 12
-        Scope              : global
-        x coordinate       : 205
-        y coordinate       : 178
-        Width              : 70
-        Height             : 48
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,vaerelse_1"
-            send_tm.en=1
-
-
-Text vaerelse_2
-    Attributes
-        ID                 : 13
-        Scope              : global
-        x coordinate       : 205
-        y coordinate       : 233
-        Width              : 70
-        Height             : 48
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,vaerelse_2"
-            send_tm.en=1
-
-
-Text stue_start
-    Attributes
-        ID                 : 14
-        Scope              : global
-        x coordinate       : 182
-        y coordinate       : 99
-        Width              : 54
-        Height             : 79
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,stue_start"
-            send_tm.en=1
-
-
-Text stue_slut
-    Attributes
-        ID                 : 15
-        Scope              : global
-        x coordinate       : 135
-        y coordinate       : 99
-        Width              : 47
-        Height             : 79
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,stue_slut"
-            send_tm.en=1
-
-
-Text pejsestue
-    Attributes
-        ID                 : 16
-        Scope              : global
-        x coordinate       : 38
-        y coordinate       : 99
-        Width              : 97
-        Height             : 79
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,pejsestue"
-            send_tm.en=1
-
-
-Text ude_nord
-    Attributes
-        ID                 : 17
-        Scope              : global
-        x coordinate       : 329
-        y coordinate       : 38
-        Width              : 28
-        Height             : 243
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,ude_nord"
-            send_tm.en=1
-
-
-Text ude_ost
-    Attributes
-        ID                 : 18
-        Scope              : global
-        x coordinate       : 205
-        y coordinate       : 284
-        Width              : 122
-        Height             : 32
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,ude_ost"
-            send_tm.en=1
-
-
-Text ude_syd
-    Attributes
-        ID                 : 19
-        Scope              : global
-        x coordinate       : 4
-        y coordinate       : 99
-        Width              : 32
-        Height             : 79
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,ude_syd"
-            send_tm.en=1
-
-
-Text ude_vest
-    Attributes
-        ID                 : 20
-        Scope              : global
-        x coordinate       : 208
-        y coordinate       : 4
-        Width              : 74
-        Height             : 31
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,ude_vest"
-            send_tm.en=1
-
-
-Text ude_vest_dor
-    Attributes
-        ID                 : 21
-        Scope              : global
-        x coordinate       : 282
-        y coordinate       : 4
-        Width              : 45
-        Height             : 31
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,ude_vest_dor"
-            send_tm.en=1
-
-
-Text ude_terrasse
-    Attributes
-        ID                 : 22
-        Scope              : global
-        x coordinate       : 136
-        y coordinate       : 39
-        Width              : 71
-        Height             : 59
-
-    Events
-        Touch Release Event
-            lastclick.txt="floorplan,toggle,ude_terrasse"
-            send_tm.en=1
-
-
-Button button_back
-    Attributes
-        ID                 : 23
-        Scope              : local
-        x coordinate       : 385
-        y coordinate       : 0
-        Width              : 95
-        Height             : 40
-
+        ID               : 23
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: on press and release
+        Opacity          : 127
+        x coordinate     : 175
+        y coordinate     : 65
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+    
     Events
         Touch Press Event
-            page back_page_id
-
-
-Variable (string) spare1
+            bt_away_pic.pic=44
+            bt_away_text.bco=65024
+            bt_away_text.pco=0
+            bt_away_icon.bco=65024
+            bt_away_icon.pco=0
+        
+        Touch Release Event
+            lastclick.txt="alarm,away,"+code_format.txt+","+code_arm_req.txt+","+bt_away_text.txt
+            printh 92
+            prints "localevent",0
+            printh 00
+            prints lastclick.txt,0
+            printh 00
+            printh FF FF FF
+        
+Hotspot bt_night
     Attributes
-        ID                 : 24
-        Scope              : local
-
-Variable (string) spare2
+        ID               : 24
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: on press and release
+        Opacity          : 127
+        x coordinate     : 310
+        y coordinate     : 65
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+    
+    Events
+        Touch Press Event
+            bt_night_pic.pic=44
+            bt_night_text.bco=65024
+            bt_night_text.pco=0
+            bt_night_icon.bco=65024
+            bt_night_icon.pco=0
+        
+        Touch Release Event
+            lastclick.txt="alarm,night,"+code_format.txt+","+code_arm_req.txt+","+bt_night_text.txt
+            printh 92
+            prints "localevent",0
+            printh 00
+            prints lastclick.txt,0
+            printh 00
+            printh FF FF FF
+        
+Hotspot bt_vacat
     Attributes
-        ID                 : 25
-        Scope              : local
-
-Variable (string) spare3
+        ID               : 25
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: on press and release
+        Opacity          : 127
+        x coordinate     : 40
+        y coordinate     : 196
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+    
+    Events
+        Touch Press Event
+            bt_vacat_pic.pic=44
+            bt_vacat_text.bco=65024
+            bt_vacat_text.pco=0
+            bt_vacat_icon.bco=65024
+            bt_vacat_icon.pco=0
+        
+        Touch Release Event
+            lastclick.txt="alarm,vacation,"+code_format.txt+","+code_arm_req.txt+","+bt_vacat_text.txt
+            printh 92
+            prints "localevent",0
+            printh 00
+            prints lastclick.txt,0
+            printh 00
+            printh FF FF FF
+        
+Hotspot bt_bypass
     Attributes
-        ID                 : 26
-        Scope              : local
-
-Variable (string) spare4
+        ID               : 26
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: on press and release
+        Opacity          : 127
+        x coordinate     : 175
+        y coordinate     : 196
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+    
+    Events
+        Touch Press Event
+            bt_bypass_pic.pic=44
+            bt_bypass_text.bco=65024
+            bt_bypass_text.pco=0
+            bt_bypass_icon.bco=65024
+            bt_bypass_icon.pco=0
+        
+        Touch Release Event
+            lastclick.txt="alarm,bypass,"+code_format.txt+","+code_arm_req.txt+","+bt_bypass_text.txt
+            printh 92
+            prints "localevent",0
+            printh 00
+            prints lastclick.txt,0
+            printh 00
+            printh FF FF FF
+        
+Hotspot bt_disarm
     Attributes
-        ID                 : 27
-        Scope              : local
-
-Variable (string) spare5
-    Attributes
-        ID                 : 28
-        Scope              : local
-
-Variable (string) spare6
-    Attributes
-        ID                 : 29
-        Scope              : local
-
-Variable (string) spare7
-    Attributes
-        ID                 : 30
-        Scope              : local
+        ID               : 27
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: on press and release
+        Opacity          : 127
+        x coordinate     : 310
+        y coordinate     : 196
+        Width            : 100
+        Height           : 100
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+    
+    Events
+        Touch Press Event
+            bt_disarm_pic.pic=44
+            bt_disarm_text.bco=65024
+            bt_disarm_text.pco=0
+            bt_disarm_icon.bco=65024
+            bt_disarm_icon.pco=0
+        
+        Touch Release Event
+            lastclick.txt="alarm,disarm,"+code_format.txt+","+code_arm_req.txt+","+bt_disarm_text.txt
+            printh 92
+            prints "localevent",0
+            printh 00
+            prints lastclick.txt,0
+            printh 00
+            printh FF FF FF
+        

@@ -1,0 +1,78 @@
+---
+# Structural .HMI changes (new pages, new pictures) need Nextion Editor, because it
+# keeps a checksummed copy of the resource directory that the repo tools can't write.
+# This workflow drives the editor on a Windows runner and commits the saved .HMI.
+name: Edit HMI structure
+
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: "HMI variant, e.g. nspanel_eu"
+        required: true
+        default: nspanel_eu
+      copy_page:
+        description: "Page to copy to the end of the page list (empty = none)"
+        required: false
+        default: ""
+      add_pictures:
+        description: "Space separated PNG paths to import as new pictures (empty = none)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  structure:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: pip install pywinauto pillow
+
+      - name: Download Nextion Editor
+        shell: pwsh
+        run: |
+          Invoke-WebRequest "https://nextion.tech/download/nextion-setup-v1-68-2.zip" -OutFile editor.zip
+          Expand-Archive editor.zip -DestinationPath nextion-editor
+
+      - name: Edit structure
+        shell: pwsh
+        env:
+          VARIANT: ${{ github.event.inputs.variant }}
+          COPY_PAGE: ${{ github.event.inputs.copy_page }}
+          ADD_PICTURES: ${{ github.event.inputs.add_pictures }}
+        run: |
+          $argv = @("tools/nextion_editor_structure.py", "hmi/$env:VARIANT.HMI",
+                    "--editor-dir", "nextion-editor", "--debug-dir", "debug")
+          if ($env:COPY_PAGE) { $argv += @("--copy-page", $env:COPY_PAGE) }
+          foreach ($png in ($env:ADD_PICTURES -split ' ' | Where-Object { $_ })) { $argv += @("--add-picture", $png) }
+          python @argv
+
+      - name: Compile to verify
+        run: >
+          python tools/nextion_compile_tft.py hmi/${{ github.event.inputs.variant }}.HMI
+          --editor-dir nextion-editor --out-dir out --debug-dir debug
+
+      - name: Commit the saved .HMI
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "hmi/${{ github.event.inputs.variant }}.HMI"
+          git commit -m "Edit ${{ github.event.inputs.variant }}.HMI structure with Nextion Editor" \
+            -m "copy page: '${{ github.event.inputs.copy_page }}', pictures: '${{ github.event.inputs.add_pictures }}'"
+          git push
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: structure-debug
+          path: debug/
