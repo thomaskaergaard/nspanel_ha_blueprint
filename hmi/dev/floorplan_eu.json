@@ -1,0 +1,158 @@
+{
+ "picture_off": 44,
+ "picture_on": 45,
+ "areas": [
+  {
+   "name": "badevaerelse",
+   "entity": "light.bad",
+   "x": 275,
+   "y": 38,
+   "w": 52,
+   "h": 51
+  },
+  {
+   "name": "sovevaerelse",
+   "entity": "light.sovevaerelse",
+   "x": 275,
+   "y": 89,
+   "w": 52,
+   "h": 63
+  },
+  {
+   "name": "walk_in",
+   "entity": "light.walk_in_lampeudtag_loft_2",
+   "x": 297,
+   "y": 152,
+   "w": 30,
+   "h": 42
+  },
+  {
+   "name": "lille_bad",
+   "entity": "light.lille_bad",
+   "x": 297,
+   "y": 194,
+   "w": 30,
+   "h": 42
+  },
+  {
+   "name": "bryggers",
+   "entity": "light.entre",
+   "x": 275,
+   "y": 236,
+   "w": 52,
+   "h": 45
+  },
+  {
+   "name": "gang",
+   "entity": "light.gang",
+   "x": 275,
+   "y": 152,
+   "w": 22,
+   "h": 84
+  },
+  {
+   "name": "kokken_a",
+   "entity": "light.kokken",
+   "x": 236,
+   "y": 38,
+   "w": 39,
+   "h": 140
+  },
+  {
+   "name": "kokken_b",
+   "entity": "light.kokken",
+   "x": 208,
+   "y": 38,
+   "w": 28,
+   "h": 61
+  },
+  {
+   "name": "vaerelse_1",
+   "entity": "light.vaerelse_2",
+   "x": 205,
+   "y": 178,
+   "w": 70,
+   "h": 48
+  },
+  {
+   "name": "vaerelse_2",
+   "entity": "light.vaerelse_1",
+   "x": 205,
+   "y": 233,
+   "w": 70,
+   "h": 48
+  },
+  {
+   "name": "stue_start",
+   "entity": "light.stue_ydre",
+   "x": 182,
+   "y": 99,
+   "w": 54,
+   "h": 79
+  },
+  {
+   "name": "stue_slut",
+   "entity": "light.stue_slut",
+   "x": 135,
+   "y": 99,
+   "w": 47,
+   "h": 79
+  },
+  {
+   "name": "pejsestue",
+   "entity": "light.pejsestue",
+   "x": 38,
+   "y": 99,
+   "w": 97,
+   "h": 79
+  },
+  {
+   "name": "ude_nord",
+   "entity": "light.udendorsbelysning_lampeudtag_nord_2",
+   "x": 329,
+   "y": 38,
+   "w": 28,
+   "h": 243
+  },
+  {
+   "name": "ude_ost",
+   "entity": "light.udendorsbelysning_lampeudtag_ost_2",
+   "x": 205,
+   "y": 284,
+   "w": 122,
+   "h": 32
+  },
+  {
+   "name": "ude_syd",
+   "entity": "light.udendorsbelysning_lampeudtag_syd_2",
+   "x": 4,
+   "y": 99,
+   "w": 32,
+   "h": 79
+  },
+  {
+   "name": "ude_vest",
+   "entity": "light.udendorsbelysning_lampeudtag_vest_2",
+   "x": 208,
+   "y": 4,
+   "w": 74,
+   "h": 31
+  },
+  {
+   "name": "ude_vest_dor",
+   "entity": "light.udendorsbelysning_lampeudtag_vest_ved_dor_2",
+   "x": 282,
+   "y": 4,
+   "w": 45,
+   "h": 31
+  },
+  {
+   "name": "ude_terrasse",
+   "entity": "switch.udendors_strom_dobbelt_stikkontakt_ved_terassevarmer_udgang_brun",
+   "x": 136,
+   "y": 39,
+   "w": 71,
+   "h": 59
+  }
+ ]
+}
