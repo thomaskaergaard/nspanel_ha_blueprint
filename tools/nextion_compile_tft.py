@@ -108,6 +108,25 @@ def click_compile(main) -> bool:
     return False
 
 
+def save_compile_output(main, debug_dir: Path) -> None:
+    """Write the editor's compile log (the Output pane) to the debug folder and the job log."""
+    try:
+        edit = main.child_window(auto_id="textbianyi", control_type="Edit").wrapper_object()
+        try:
+            text = edit.get_value()
+        except Exception:
+            text = edit.window_text()
+    except Exception as err:
+        print(f"could not read compile output: {err}")
+        return
+    (debug_dir / "compile_output.txt").write_text(text, encoding="utf-8")
+    lines = [line for line in text.splitlines() if line.strip()]
+    warnings = [line for line in lines if line.lower().startswith("warning")]
+    print(f"compile output: {len(lines)} lines, {len(warnings)} warnings")
+    for line in lines:
+        print(f"  {line}")
+
+
 def process_windows(pid: int):
     return Desktop(backend="uia").windows(process=pid)
 
@@ -199,6 +218,7 @@ def main() -> int:
     compile_started = time.time()
     time.sleep(args.compile_wait)
     screenshot(debug_dir, "compiled")
+    save_compile_output(main, debug_dir)
 
     # Compile only checks the project; File > "TFT file output" writes the .tft.
     export_tft(app, main, proc.pid, debug_dir)
@@ -218,8 +238,6 @@ def main() -> int:
         dismiss_dialogs(proc.pid, main.handle, debug_dir)
         time.sleep(5)
     screenshot(debug_dir, "finished")
-    output = [c.window_text() for c in main.descendants() if "Compile" in c.window_text() and "Success" in c.window_text()]
-    print(f"compile output: {output}")
 
     proc.kill()
     if not tft:
