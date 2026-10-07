@@ -7,6 +7,7 @@ editor. This script opens a project, applies the requested steps and saves it:
 
   --copy-page NAME   copy page NAME and move the copy to the end of the page list
   --add-picture PNG  import a picture; it gets the next free picture id
+  --replace-picture ID  replace picture ID with hmi/dev/ui/<model>/pics/<ID>.png
 
 Every step leaves a screenshot in --debug-dir. Coordinates assume the 1024x768
 desktop of the GitHub Windows runner and the editor's default window layout.
@@ -31,6 +32,8 @@ PAGE_LIST_FIRST_ROW = (900, 178)  # row "0 boot" in the Page panel
 PAGE_COPY_BUTTON = (970, 157)
 PAGE_DOWN_BUTTON = (941, 157)
 PICTURE_ADD_BUTTON = (18, 441)
+PICTURE_REPLACE_BUTTON = (75, 441)
+PICTURE_LIST_FIRST = (95, 520)  # first thumbnail; Down moves the selection one picture
 
 
 def page_names(hmi_path: Path) -> list[str]:
@@ -90,9 +93,9 @@ def list_windows(pid: int) -> None:
                 pass
 
 
-def click_picture_add(main) -> bool:
-    """Click the Add button of the Picture panel through UI Automation."""
-    x, y = PICTURE_ADD_BUTTON
+def click_picture_button(main, coords) -> bool:
+    """Click a Picture panel toolbar button through UI Automation (plain clicks only show the tooltip)."""
+    x, y = coords
     for button in main.descendants(control_type="Button"):
         rect = button.rectangle()
         if rect.left <= x <= rect.right and rect.top <= y <= rect.bottom:
@@ -107,7 +110,7 @@ def click_picture_add(main) -> bool:
 
 def add_picture(app, main, pid: int, png: Path, debug_dir: Path) -> None:
     main.set_focus()
-    if not click_picture_add(main):
+    if not click_picture_button(main, PICTURE_ADD_BUTTON):
         print("Picture add button not found via UIA; pressing it with the mouse")
         mouse.press(coords=PICTURE_ADD_BUTTON)
         time.sleep(0.2)
@@ -132,6 +135,45 @@ def add_picture(app, main, pid: int, png: Path, debug_dir: Path) -> None:
     shot(debug_dir, f"picture_confirmed_{png.stem}")
 
 
+def find_picture_file(hmi_path: Path, picture_id: int) -> Path:
+    folder = hmi.picture_dir(hmi_path.stem)
+    for suffix in (".png", ".jpg"):
+        if (folder / f"{picture_id}{suffix}").exists():
+            return folder / f"{picture_id}{suffix}"
+    raise SystemExit(f"no {folder}/{picture_id}.png")
+
+
+def replace_picture(main, pid: int, picture_id: int, image: Path, debug_dir: Path, picture_count: int) -> None:
+    main.set_focus()
+    mouse.click(coords=PICTURE_LIST_FIRST)  # any thumbnail: the list may be scrolled
+    time.sleep(1)
+    for _ in range(picture_count + 5):
+        keyboard.send_keys("{UP}")  # Up stops at picture 0
+        time.sleep(0.05)
+    for _ in range(picture_id):
+        keyboard.send_keys("{DOWN}")
+        time.sleep(0.1)
+    time.sleep(1)
+    shot(debug_dir, f"selected_picture_{picture_id}")
+    if not click_picture_button(main, PICTURE_REPLACE_BUTTON):
+        raise SystemExit("Picture replace button not found")
+    dialog = wait_file_dialog(pid)
+    shot(debug_dir, f"replace_dialog_{picture_id}")
+    if dialog is None:
+        list_windows(pid)
+        raise SystemExit(f"no file dialog after clicking replace for picture {picture_id}")
+    dialog.set_focus()
+    time.sleep(1)
+    keyboard.send_keys(str(image.resolve()), with_spaces=True)
+    time.sleep(1)
+    keyboard.send_keys("{ENTER}")
+    time.sleep(6)
+    shot(debug_dir, f"picture_replaced_{picture_id}")
+    keyboard.send_keys("{ENTER}")  # confirm the import message
+    time.sleep(3)
+    shot(debug_dir, f"picture_replace_confirmed_{picture_id}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("hmi", type=Path)
@@ -139,12 +181,16 @@ def main() -> int:
     parser.add_argument("--debug-dir", type=Path, required=True)
     parser.add_argument("--copy-page")
     parser.add_argument("--add-picture", type=Path, action="append", default=[])
+    parser.add_argument("--replace-picture", type=int, action="append", default=[],
+                        help="picture id to replace with hmi/dev/ui/<model>/pics/<id>.png")
     args = parser.parse_args()
 
     hmi_path = args.hmi.resolve()
     debug_dir = args.debug_dir / f"{hmi_path.stem}_structure"
     debug_dir.mkdir(parents=True, exist_ok=True)
     pages = page_names(hmi_path)
+    # Count before the editor opens the file (Windows then blocks reading it).
+    picture_count = len(hmi.picture_names(hmi_path.read_bytes())) + len(args.add_picture)
     print(f"{len(pages)} pages: {', '.join(pages)}")
 
     exe = args.editor_dir.resolve() / "Nextion Editor.exe"
@@ -167,6 +213,8 @@ def main() -> int:
         copy_page(main, args.copy_page, pages, debug_dir)
     for png in args.add_picture:
         add_picture(app, main, proc.pid, png, debug_dir)
+    for picture_id in args.replace_picture:
+        replace_picture(main, proc.pid, picture_id, find_picture_file(hmi_path, picture_id), debug_dir, picture_count)
 
     main.set_focus()
     saved = False

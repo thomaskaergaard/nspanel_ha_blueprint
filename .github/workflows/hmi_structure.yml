@@ -1,14 +1,15 @@
 ---
-# Structural .HMI changes (new pages, new pictures) need Nextion Editor, because it
-# keeps a checksummed copy of the resource directory that the repo tools can't write.
-# This workflow drives the editor on a Windows runner and commits the saved .HMI.
+# Structural .HMI changes (new pages, new or replaced pictures) need Nextion Editor,
+# because it keeps a checksummed copy of the resource directory that the repo tools
+# can't write. This workflow drives the editor on a Windows runner, compiles each
+# result as a check and commits the saved .HMI files.
 name: Edit HMI structure
 
 on:
   workflow_dispatch:
     inputs:
-      variant:
-        description: "HMI variant, e.g. nspanel_eu"
+      variants:
+        description: "Space separated HMI variants, e.g. nspanel_eu nspanel_us"
         required: true
         default: nspanel_eu
       copy_page:
@@ -19,6 +20,10 @@ on:
         description: "Space separated PNG paths to import as new pictures (empty = none)"
         required: false
         default: ""
+      replace_pictures:
+        description: "Space separated picture ids to replace from hmi/dev/ui/<model>/pics (empty = none)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -26,7 +31,7 @@ permissions:
 jobs:
   structure:
     runs-on: windows-latest
-    timeout-minutes: 40
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
@@ -43,32 +48,36 @@ jobs:
           Invoke-WebRequest "https://nextion.tech/download/nextion-setup-v1-68-2.zip" -OutFile editor.zip
           Expand-Archive editor.zip -DestinationPath nextion-editor
 
-      - name: Edit structure
+      - name: Edit structure and compile
         shell: pwsh
         env:
-          VARIANT: ${{ github.event.inputs.variant }}
+          VARIANTS: ${{ github.event.inputs.variants }}
           COPY_PAGE: ${{ github.event.inputs.copy_page }}
           ADD_PICTURES: ${{ github.event.inputs.add_pictures }}
+          REPLACE_PICTURES: ${{ github.event.inputs.replace_pictures }}
         run: |
-          $argv = @("tools/nextion_editor_structure.py", "hmi/$env:VARIANT.HMI",
-                    "--editor-dir", "nextion-editor", "--debug-dir", "debug")
-          if ($env:COPY_PAGE) { $argv += @("--copy-page", $env:COPY_PAGE) }
-          foreach ($png in ($env:ADD_PICTURES -split ' ' | Where-Object { $_ })) { $argv += @("--add-picture", $png) }
-          python @argv
+          $ErrorActionPreference = "Stop"
+          foreach ($variant in ($env:VARIANTS -split ' ' | Where-Object { $_ })) {
+            $argv = @("tools/nextion_editor_structure.py", "hmi/$variant.HMI",
+                      "--editor-dir", "nextion-editor", "--debug-dir", "debug")
+            if ($env:COPY_PAGE) { $argv += @("--copy-page", $env:COPY_PAGE) }
+            foreach ($png in ($env:ADD_PICTURES -split ' ' | Where-Object { $_ })) { $argv += @("--add-picture", $png) }
+            foreach ($id in ($env:REPLACE_PICTURES -split ' ' | Where-Object { $_ })) { $argv += @("--replace-picture", $id) }
+            python @argv
+            if ($LASTEXITCODE) { throw "editing $variant failed" }
+            python tools/nextion_compile_tft.py "hmi/$variant.HMI" --editor-dir nextion-editor --out-dir out --debug-dir debug
+            if ($LASTEXITCODE) { throw "compiling $variant failed" }
+          }
+          python tools/nextion_hmi_sync.py --check --all -v
 
-      - name: Compile to verify
-        run: >
-          python tools/nextion_compile_tft.py hmi/${{ github.event.inputs.variant }}.HMI
-          --editor-dir nextion-editor --out-dir out --debug-dir debug
-
-      - name: Commit the saved .HMI
+      - name: Commit the saved .HMI files
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "hmi/${{ github.event.inputs.variant }}.HMI"
-          git commit -m "Edit ${{ github.event.inputs.variant }}.HMI structure with Nextion Editor" \
-            -m "copy page: '${{ github.event.inputs.copy_page }}', pictures: '${{ github.event.inputs.add_pictures }}'"
+          git add hmi/*.HMI
+          git commit -m "Edit .HMI structure with Nextion Editor: ${{ github.event.inputs.variants }}" \
+            -m "copy page: '${{ github.event.inputs.copy_page }}', add pictures: '${{ github.event.inputs.add_pictures }}', replace pictures: '${{ github.event.inputs.replace_pictures }}'"
           git push
 
       - uses: actions/upload-artifact@v4

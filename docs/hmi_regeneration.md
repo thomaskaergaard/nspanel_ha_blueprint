@@ -92,8 +92,9 @@ Buttons on the button pages are drawn by cropping picture 46 (off) or 47 (on) be
 
 ```bash
 python tools/render_button_backgrounds.py --all
-python tools/nextion_hmi_sync.py --all
 ```
+
+Then run the **Edit HMI structure** workflow with `replace_pictures: 46 47` for the affected variants.
 
 The render script draws the rectangles on top of the page background (picture 0), using the style of the original pictures: 85% opaque, 3 px narrower and 4 px shorter than the component, 16 px corner radius. All eight button pages must share one layout.
 
@@ -149,6 +150,8 @@ editor on a Windows runner (`tools/nextion_editor_structure.py`) and commits the
 - `copy_page`: copy a page to the end of the page list. The copy keeps the original's size and
   object count, so the tools can then rewrite its content in place.
 - `add_pictures`: import PNGs as new pictures (next free ids).
+- `replace_pictures`: picture ids to replace with `hmi/dev/ui/<model>/pics/<id>.png`.
+- `variants`: one or more variants, edited one after another in a single run.
 
 `nextion_hmi_sync.py` reports pictures in `hmi/dev/ui/<model>/pics` that differ from the `.HMI`,
 but doesn't write them.
@@ -165,7 +168,7 @@ python tools/build_floorplan_page.py      # rebuilds the floorplan page and floo
 python tools/nextion_hmi_sync.py --variant nspanel_eu
 ```
 
-New pictures 48/49 must be re-imported with the editor (see above).
+Changed pictures 48/49 must be re-imported with the editor (`replace_pictures: 48 49`).
 
 Each area is a global crop-image Text, so Home Assistant can light it from any page with
 `floorplan.<area>.picc=49` (48 = dark). A tap sends `floorplan,toggle,<area>` and opening the page
