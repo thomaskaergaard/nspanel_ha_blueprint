@@ -137,3 +137,27 @@ Then open these updated files in Nextion Editor and compile:
 
 - `/home/runner/work/nspanel_ha_blueprint/nspanel_ha_blueprint/hmi/nspanel_eu.HMI`
 - `/home/runner/work/nspanel_ha_blueprint/nspanel_ha_blueprint/hmi/nspanel_CJK_eu.HMI`
+
+## Floor plan page (EU)
+
+`tools/build_floorplan_page.py` turns the `alarm` page of `nspanel_eu.HMI` into a floor plan. The
+tap areas come from `hmi/dev/floorplan_eu.json`, and pictures 44 (lights off) and 45 (all lit) from
+`hmi/dev/nspanel_eu_pictures/`. Those three files are generated from the 3D renders by the
+Plantegning project (`floorplan/nspanel.py`). After regenerating them:
+
+```bash
+python tools/build_floorplan_page.py      # rebuilds the alarm page and alarm.txt
+python tools/nextion_hmi_sync.py --variant nspanel_eu
+```
+
+Each area is a global crop-image Text, so Home Assistant can light it from any page with
+`alarm.<area>.picc=45` (44 = dark). A tap sends `floorplan,toggle,<area>` and opening the page
+sends `floorplan,opened`, both as `esphome.nspanel_ha_blueprint` events.
+
+Rules learned while rebuilding a page:
+
+- **Keep the object count.** Nextion Editor refuses to open a page whose object count changed
+  ("Version mismatch"). The tool fills up to the original count with spare variables.
+- **Mind display RAM.** Every string variable reserves its `Max. Text Size` in RAM, and global
+  components also add to the global memory of every page. The compile fails with
+  `Memory overflow` above 3584 bytes per page.
